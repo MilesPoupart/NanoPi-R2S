@@ -1,5 +1,7 @@
 #基于DHDAXCW骷髅头的R2S固件进行修改
+
 #目前主要改动如下
+
 1.将全能推送（luci-app-pushbot）替换为原微信推送（luci-app-serverchan）
 2.恢复加入Onliner User（luci-app-onliner）Watchcat（luci-app-watchcat）
 3.将内核空间KERNEL_PARTSIZE翻倍
