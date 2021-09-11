@@ -171,7 +171,7 @@ sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' pac
 sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart)$(TZ=UTC-8 date "+%Y%m%d") @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
 # find package/*/ feeds/*/ -maxdepth 6 -path "*luci-app-smartdns/luasrc/controller/smartdns.lua" | xargs -i sed -i 's/\"SmartDNS\")\, 4/\"SmartDNS\")\, 3/g' {} 
 # Test kernel 5.10
-# sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
+sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
 
 # Custom configs
 git am $GITHUB_WORKSPACE/patches/lean/*.patch
@@ -180,7 +180,7 @@ echo 'net.bridge.bridge-nf-call-iptables=0' >> package/base-files/files/etc/sysc
 echo 'net.bridge.bridge-nf-call-ip6tables=0' >> package/base-files/files/etc/sysctl.conf
 echo 'net.bridge.bridge-nf-call-arptables=0' >> package/base-files/files/etc/sysctl.conf
 echo 'net.bridge.bridge-nf-filter-vlan-tagged=0' >> package/base-files/files/etc/sysctl.conf
-# Add CUPInfo
+# Add CPUInfo
 pushd package/lean/autocore/files/arm/sbin
 cp -f $GITHUB_WORKSPACE/scripts/cpuinfo cpuinfo
 popd
