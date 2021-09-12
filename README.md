@@ -1,4 +1,7 @@
 ## 基于DHDAXCW骷髅头的R2S固件（docker版本）进行修改
+尝试了改为5.10内核，但屡屡失败（咱也不懂，咱也不敢问）放弃了...
+
+一般在上游代码有变动后才会进行编译发布。目前我自己实测release里几个版本都比较稳定。
 # 目前主要改动如下
 1. 将全能推送（luci-app-pushbot）替换为原微信推送（luci-app-serverchan）
 2. 恢复加入Onliner User（luci-app-onliner）Watchcat（luci-app-watchcat）
