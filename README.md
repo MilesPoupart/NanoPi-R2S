@@ -9,4 +9,4 @@
 4. 将ROOTFS_PARTSIZE适当缩小至880，加快编译（需要扩容请使用diskgenius（适用sq固件）或gparted（适用ext4固件））
 5. 加入编译优化选项CONFIG_TARGET_OPTIMIZATION="-O3 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53"（虽然modify_config.sh好像已经做了这件事...）
 6. 移除lean.sh中失效的rtl8192du链接，修正TencentDDNS链接
-8. 修改beta_docker.config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
+7. 修改beta_docker.config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
