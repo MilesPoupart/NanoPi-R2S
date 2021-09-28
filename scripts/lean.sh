@@ -19,6 +19,9 @@ git clone --depth=1 https://github.com/Lienol/openwrt-package
 # Plagiarism wish you wealthy family
 # Add luci-app-passwall
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+ 
+# Add autotimeset
+git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git

@@ -11,3 +11,4 @@
 6. 移除lean.sh中失效的rtl8192du链接
 7. 修改beta_docker.config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
 8. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
+9. 加入autotimeset
