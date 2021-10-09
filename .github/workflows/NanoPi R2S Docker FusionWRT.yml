@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: NanoPi R2S Docker FusionWRT
+name: NanoPi R2S formal edition Docker FusionWRT
 
 on:
   repository_dispatch:
@@ -55,19 +55,19 @@ jobs:
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
-
     - name: Clone Source Code
       run: |
         df -hT $PWD
         git config --global user.email "git@github.com"
         git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
+    
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
+        
     - name: Update Feeds
       id: update
       run: |
@@ -79,7 +79,6 @@ jobs:
         git clone --depth=1 https://github.com/coolsnowwolf/luci customfeeds/luci
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
-    
     - name: MOD index file
       run: |
          cd $OPENWRTROOT/package/lean/autocore/files/arm
@@ -88,7 +87,6 @@ jobs:
       run: |
         cd $OPENWRTROOT
         ./scripts/feeds install -a
-
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files
@@ -139,7 +137,6 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=FIRMWARE::$(echo $PWD)"
         echo "::set-output name=COMPILE_STATUS::success"
-
     - name: Generate Firmware
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
       id: generate
@@ -178,7 +175,6 @@ jobs:
         make target/install -j$(nproc) || make target/install -j1 V=s
         make checksum
         echo "::set-output name=GENERATE_STATUS::success"
-
     - name: Upload Bin Folder
       uses: actions/upload-artifact@main
       if: steps.generate.outputs.GENERATE_STATUS == 'success'
@@ -261,22 +257,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi R2S FusionWrt_Beta_docker_高大全
+          name: ${{ steps.tag.outputs.release_date }} r2s formal edition_Docker版_高大全
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
-        
+
       - name: Delete workflow runs
         uses: GitRML/delete-workflow-runs@main
         with:
           retain_days: 1
-          keep_minimum_runs: 1  
-          
+          keep_minimum_runs: 1
+
       - name: Remove old Releases
         uses: dev-drprasad/delete-older-releases@v0.1.0
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
         with:
-          keep_latest: 10
+          keep_latest: 20
           delete_tags: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
