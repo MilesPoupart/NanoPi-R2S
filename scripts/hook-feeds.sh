@@ -8,6 +8,12 @@
 # Svn checkout packages from immortalwrt's repository
 pushd customfeeds
 
+# Add luci-app-eqos
+svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-eqos luci/applications/luci-app-eqos
+
+# Add luci-proto-modemmanager
+svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
+
 # Add luci-app-gowebdav
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
 svn co https://github.com/immortalwrt/packages/trunk/net/gowebdav packages/net/gowebdav
@@ -23,6 +29,9 @@ git clone --depth=1 https://github.com/immortalwrt/openwrt-tmate
 
 # Add luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall luci/applications/openwrt-passwall
+sed -i 's/ upx\/host//g' openwrt-passwall/v2ray-plugin/Makefile
+grep -lr upx/host openwrt-passwall/* | xargs -t -I {} sed -i '/upx\/host/d' {}
+# git clone -b hello https://github.com/DHDAXCW/openwrt-passwall luci/applications/openwrt-passwall
 
 # Add gotop
 svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/admin/gotop packages/admin/gotop

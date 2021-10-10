@@ -22,6 +22,9 @@ rm -rf openwrt-package/luci-app-verysync
 # Add autotimeset
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 
+# Add luci-app-passwall
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
 git clone --depth=1 https://github.com/jerrykuku/luci-app-vssr
@@ -44,6 +47,9 @@ git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 
 # Add luci-app-oled (R2S Only)
 git clone --depth=1 https://github.com/NateLol/luci-app-oled
+
+# Add ServerChan
+git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 
 # Add luci-app-diskman
 git clone --depth=1 https://github.com/SuLingGG/luci-app-diskman
@@ -173,7 +179,8 @@ sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart)$(TZ=UTC-8 date "+%Y%m%d") 
 # sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
 
 # Custom configs
-git am $GITHUB_WORKSPACE/patches/lean/*.patch
+# git am $GITHUB_WORKSPACE/patches/lean/*.patch
+git am $GITHUB_WORKSPACE/patches/*.patch
 echo -e " DHDAXCW's FusionWrt (modified by MilesPoupart) built on "$(date +%Y.%m.%d)"\n -----------------------------------------------------" >> package/base-files/files/etc/banner
 echo 'net.bridge.bridge-nf-call-iptables=0' >> package/base-files/files/etc/sysctl.conf
 echo 'net.bridge.bridge-nf-call-ip6tables=0' >> package/base-files/files/etc/sysctl.conf
@@ -183,7 +190,6 @@ echo 'net.bridge.bridge-nf-filter-vlan-tagged=0' >> package/base-files/files/etc
 pushd package/lean/autocore/files/arm/sbin
 cp -f $GITHUB_WORKSPACE/scripts/cpuinfo cpuinfo
 popd
-
 # Add luci-app-adguardhome
 rm -rf package/lean/luci-app-adguardhome
 svn co https://github.com/Lienol/openwrt/trunk/package/diy/luci-app-adguardhome package/lean/luci-app-adguardhome
