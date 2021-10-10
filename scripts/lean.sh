@@ -16,10 +16,9 @@ pushd package/community
 
 # Add Lienol's Packages
 git clone --depth=1 https://github.com/Lienol/openwrt-package
-# Plagiarism wish you wealthy family
-# Add luci-app-passwall
-#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
- 
+rm -rf openwrt-package/verysync
+rm -rf openwrt-package/luci-app-verysync
+
 # Add autotimeset
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 
