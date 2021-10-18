@@ -1,10 +1,4 @@
 #!/bin/bash
-#=================================================
-# File name: hook-feeds.sh
-# Author: SuLingGG
-# Blog: https://mlapp.cn
-#=================================================
-
 # Svn checkout packages from immortalwrt's repository
 pushd customfeeds
 

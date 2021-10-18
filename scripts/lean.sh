@@ -5,11 +5,6 @@ pushd package/lean
 git clone --depth=1 https://github.com/fw876/helloworld
 popd
 
-# Add luci-app-smartdns & smartdns
-#pushd package/lean
-#git clone --depth 1 https://github.com/DHDAXCW/smartdns-le.git
-#popd
-
 # Clone community packages to package/community
 mkdir package/community
 pushd package/community
@@ -73,7 +68,7 @@ git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8812au-ac
 # svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8821cu
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8188eu
-# svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192du
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192eu
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl88x2bu
 
 # Add luci-app-smartdns & smartdns
@@ -175,7 +170,7 @@ sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
-sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart)$(TZ=UTC-8 date "+%Y%m%d") @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
+sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt $(TZ=UTC-8 date "+%Y%m%d") /g" package/lean/default-settings/files/zzz-default-settings
 # find package/*/ feeds/*/ -maxdepth 6 -path "*luci-app-smartdns/luasrc/controller/smartdns.lua" | xargs -i sed -i 's/\"SmartDNS\")\, 4/\"SmartDNS\")\, 3/g' {} 
 # Test kernel 5.10
 # sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
