@@ -73,7 +73,7 @@ svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/pa
 
 # Add luci-app-smartdns & smartdns
 svn co https://github.com/281677160/openwrt-package/trunk/feeds/luci/applications/luci-app-smartdns
-svn co https://github.com/281677160/openwrt-package/trunk/feeds/packages/net/smartdns
+# svn co https://github.com/281677160/openwrt-package/trunk/feeds/packages/net/smartdns
 # svn co https://github.com/OpenWrt-Actions/OpenWrt-Packages/trunk/smartdns
 # svn co https://github.com/OpenWrt-Actions/OpenWrt-Packages/trunk/luci-app-smartdns
 # svn co https://github.com/openwrt/packages/trunk/net/smartdns
@@ -129,7 +129,7 @@ sed -i '/http/d' zzz-default-settings
 sed -i '/18.06/d' zzz-default-settings
 export orig_version=$(cat "zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')
 export date_version=$(date -d "$(rdate -n -4 -p ntp.aliyun.com)" +'%Y-%m-%d')
-sed -i "s/${orig_version}/${orig_version} ${date_version}/g" zzz-default-settings
+sed -i "s/${orig_version}/${orig_version} (${date_version})/g" zzz-default-settings
 popd
 
 # Fix libssh
