@@ -22,3 +22,8 @@
 
 ##功能相关
 12. 移除了过于迟钝的风扇脚本
+
+### 脚本升级
+```
+wget https://raw.githubusercontent.com/MilesPoupart/scripts/main/onlineupdate.sh && sh onlineupdate.sh
+```
