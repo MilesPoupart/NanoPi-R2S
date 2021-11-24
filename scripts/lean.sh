@@ -40,6 +40,15 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 
+# Add luci-app-adguardhome
+svn co https://github.com/Lienol/openwrt-package/branches/other/luci-app-adguardhome
+
+# Add ddnsto & linkease
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
+svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
+svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
+svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
+
 # Add luci-app-oled (R2S Only)
 git clone --depth=1 https://github.com/NateLol/luci-app-oled
 
@@ -66,6 +75,9 @@ rm -rf ../lean/luci-theme-argon
 
 # Add subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
+
+# Add luci-app-adguardhome
+svn co https://github.com/Lienol/openwrt-package/branches/other/luci-app-adguardhome
 
 # Add extra wireless drivers
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8812au-ac
@@ -186,10 +198,3 @@ echo 'net.bridge.bridge-nf-filter-vlan-tagged=0' >> package/base-files/files/etc
 pushd package/lean/autocore/files/arm/sbin
 cp -f $GITHUB_WORKSPACE/scripts/cpuinfo cpuinfo
 popd
-# Add luci-app-adguardhome
-rm -rf package/lean/luci-app-adguardhome
-svn co https://github.com/Lienol/openwrt/trunk/package/diy/luci-app-adguardhome package/lean/luci-app-adguardhome
-rm -rf ./feeds/packages/net/adguardhome
-svn co https://github.com/openwrt/packages/trunk/net/adguardhome feeds/packages/net/adguardhome
-sed -i '/\t)/a\\t$(STAGING_DIR_HOST)/bin/upx --lzma --best $(GO_PKG_BUILD_BIN_DIR)/AdGuardHome' ./feeds/packages/net/adguardhome/Makefile
-sed -i '/init/d' feeds/packages/net/adguardhome/Makefile
