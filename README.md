@@ -1,8 +1,9 @@
 ## 基于DHDAXCW骷髅头的R2S固件（docker版本）进行修改
-尝试了改为5.10内核，但屡屡失败（咱也不懂，咱也不敢问）放弃了...
 
-自动编译每天发布。手动编译不定期更新。
+自动编译每周三、周六发布。手动编译不定期更新。
+
 # 目前主要改动如下
+
 ## 插件相关
 1. 将全能推送（luci-app-pushbot）替换为原微信推送（luci-app-serverchan）
 2. 恢复加入Onliner User（luci-app-onliner）Watchcat（luci-app-watchcat）
@@ -11,9 +12,7 @@
 5. 继承docker版全插件衣钵 继续编译全插件版本
 
 ## 驱动相关
-6. ~~移除lean.sh中失效的rtl8192du链接~~上游已更正驱动链接为rtl8192eu，已同步更正
-7. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
-8. 十分头铁地依然使用新版uboot（即撤销了[这一次commit](https://github.com/DHDAXCW/NanoPi-R2S-2021/commit/0e1b1ff00a02357d4dad63f2d50570686cc53e6f)）
+6. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
 
 ## 编译相关
 9. 不生成rootfs格式的固件
