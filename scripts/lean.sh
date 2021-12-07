@@ -3,10 +3,6 @@
 # Add luci-app-ssr-plus
 pushd package/lean
 git clone --depth=1 https://github.com/fw876/helloworld
-
-# Add luci-app-unblockneteasemusic
-rm -rf luci-app-unblockmusic
-git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 popd
 
 # Clone community packages to package/community
@@ -20,6 +16,10 @@ rm -rf openwrt-package/luci-app-verysync
 
 # Add autotimeset
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
+
+#Add luci-app-unblockmusic
+rm -rf ../lean/luci-app-unblockmusic
+git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 
 # Add luci-app-passwall
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
