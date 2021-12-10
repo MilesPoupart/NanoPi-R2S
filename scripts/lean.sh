@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Add luci-app-ssr-plus
-pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
-popd
-
 # Clone community packages to package/community
 mkdir package/community
 pushd package/community
@@ -16,6 +11,9 @@ rm -rf openwrt-package/luci-app-verysync
 
 # Add autotimeset
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
+
+# Add luci-app-ssr-plus
+git clone --depth=1 https://github.com/fw876/helloworld.git
 
 #Add luci-app-unblockmusic
 rm -rf ../lean/luci-app-unblockmusic
