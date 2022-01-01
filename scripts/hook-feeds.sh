@@ -50,4 +50,3 @@ echo "src-link luci $luci_feed" >> feeds.conf.default
 
 # Update feeds
 ./scripts/feeds update -a
-

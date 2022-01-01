@@ -55,12 +55,14 @@ jobs:
         git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-
+        
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
+        # clean: 'false'
+        clean: 'true'
         
     - name: Update Feeds
       id: update
@@ -255,7 +257,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stablize_稳定版
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Stable_稳定版
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
