@@ -4,14 +4,14 @@ on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: 15 16 * * *
+    - cron: 15 16 * * 2
   # watch:
   #   types: started
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: configs/lean/lean_docker.config
+  CONFIG_FILE: configs/lean/lean_docker_lite.config
   DIY_SH: scripts/lean.sh
   IPV6MOD_IN_FIRMWARE: true
   KMODS_IN_FIRMWARE: true
@@ -55,12 +55,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         
-    # - name: Cache
-    #   uses: klever1988/cachewrtbuild@main
-    #   with:
-    #     ccache: 'true'
-    #     prefix: ${{ github.workspace }}/openwrt
-    #     clean: 'flase'
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        clean: 'flase'
         
     - name: Free up disk space
       if: env.FREE_UP_DISK == 'true'
@@ -250,7 +250,7 @@ jobs:
         id: tag
         if: env.UPLOAD_RELEASE == 'true' && !cancelled()
         run: |
-          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-Lean1"
+          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")-Lean-docker-lite"
           echo "::set-output name=release_date::$(date +"%Y.%m.%d")"
           touch release.txt
           [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
@@ -262,7 +262,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S formal edition_Docker版_全插件
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S formal edition_Docker版_精简版
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
