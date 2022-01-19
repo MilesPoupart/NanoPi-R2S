@@ -25,5 +25,5 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 
 ## 编译相关
 
-8. 不生成rootfs格式的固件
+8. 不生成rootfs格式的固件（全插件版本仅生成EXT4版本固件）
 9. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
