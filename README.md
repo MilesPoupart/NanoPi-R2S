@@ -1,8 +1,9 @@
 ## 基于DHDAXCW骷髅头的R2S固件（Docker版本）进行修改
 
-Github Action终于不堪全插件版本的重负，无法在线编译了。全插件版本将在必要时手动编译。
+Github Action终于不堪全插件版本的重负，大概率无法在线编译了。全插件版本将在必要时手动编译可用版本。
 
-自动编译每周三编译**Docker精简版**。<br>
+自动编译每周三、周六编译**Docker精简版**。<br>
+每天编译**Docker全插件版**（大概率不成功）。<br>
 手动触发编译的**Docker精简版**、**Docker全插件版**将在有重要更新内容后更新。
 
 # 目前主要改动如下
@@ -13,7 +14,7 @@ Github Action终于不堪全插件版本的重负，无法在线编译了。全�
 2. 恢复加入Onliner User（luci-app-onliner）
 3. 恢复加入Watchcat（luci-app-watchcat）
 4. 加入iperf3
-5. 继承Docker版全插件衣钵 继续编译全插件版本(不定期)
+5. 继承Docker版全插件衣钵 继续编译全插件版本(不保证成功)
 6. 精简Docker版除以上区别外，基本与骷髅头的精简Docker版看齐，其他差别为：
     + 进一步去除aliyundrive-webdav、baidupcs-web、tencentddns、unblockneteasemusic、uugamebooster、mentohust；
     + 恢复保留jd-dailybonus、kodexplorer、minidlna、pptp-server、socat、verysync、webadmin、xlnetacc、ipv6等相关协议支持。

@@ -1,17 +1,17 @@
-name: NanoPi R2S Docker FusionWRT lite
+name: NanoPi R2S Docker FusionWRT full
 
 on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: 15 16 * * 2,5
+    - cron: 15 16 * * *
   # watch:
   #   types: started
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: configs/lean/lean_docker_lite.config
+  CONFIG_FILE: configs/lean/lean_docker.config
   DIY_SH: scripts/lean.sh
   IPV6MOD_IN_FIRMWARE: true
   KMODS_IN_FIRMWARE: true
@@ -55,12 +55,12 @@ jobs:
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         
-    - name: Cache
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
-        clean: 'flase'
+    # - name: Cache
+    #   uses: klever1988/cachewrtbuild@main
+    #   with:
+    #     ccache: 'true'
+    #     prefix: ${{ github.workspace }}/openwrt
+    #     clean: 'flase'
         
     - name: Free up disk space
       if: env.FREE_UP_DISK == 'true'
