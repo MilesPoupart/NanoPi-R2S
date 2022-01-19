@@ -17,7 +17,7 @@ rm -rf openwrt-package/verysync
 rm -rf openwrt-package/luci-app-verysync
 
 # Add autotimeset
-git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
+# git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 
 # Add luci-app-netdata
 rm -rf ../lean/luci-app-netdata
