@@ -28,7 +28,7 @@ git clone --depth=1 https://github.com/fw876/helloworld.git
 
 # Add luci-app-unblockneteasemusic
 rm -rf ../lean/luci-app-unblockmusic
-git clone depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
+git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
@@ -42,7 +42,7 @@ git clone --depth=1 https://github.com/KyleRicardo/MentoHUST-OpenWrt-ipk
 git clone --depth=1 https://github.com/ysc3839/luci-proto-minieap
 
 # Add luci-app-bypass
-# git clone depth=1 https://github.com/garypang13/luci-app-bypass.git
+# git clone --depth=1 https://github.com/garypang13/luci-app-bypass.git
 
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
@@ -64,7 +64,7 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 # git clone https://github.com/DHDAXCW/OpenClash
 
 # Add luci-app-ikoolproxy (godproxy)
-git clone depth=1 https://github.com/iwrt/luci-app-ikoolproxy.git
+git clone --depth=1 https://github.com/iwrt/luci-app-ikoolproxy.git
 
 # Add luci-app-dockerman
 rm -rf ../lean/luci-app-docker
@@ -166,7 +166,7 @@ sed -i '/mt7662u_rom_patch.bin/a\\techo mt76-usb disable_usb_sg=1 > $\(1\)\/etc\
 popd
 
 # Add po2lmo
-git clone depth=1 https://github.com/openwrt-dev/po2lmo.git
+git clone --depth=1 https://github.com/openwrt-dev/po2lmo.git
 pushd po2lmo
 make && sudo make install
 popd
