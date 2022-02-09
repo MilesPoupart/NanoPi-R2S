@@ -1,4 +1,4 @@
-name: NanoPi R2S Docker FusionWRT lite
+name: NanoPi-R2S-Docker Lite
 
 on:
   repository_dispatch:
@@ -262,7 +262,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S formal edition_Docker版_精简版
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Docker容器版_稳定
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
