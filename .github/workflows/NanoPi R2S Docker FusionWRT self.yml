@@ -1,4 +1,4 @@
-name: NanoPi R2S Docker FusionWRT self-hosted
+name: NanoPi-R2S-Docker self-hosted
 
 on:
   repository_dispatch:
@@ -9,8 +9,8 @@ on:
   #   types: started
 
 env:
-  REPO_URL: https://github.com/DHDAXCW/lede
-  REPO_BRANCH: bate
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   CONFIG_FILE: configs/lean/lean_docker.config
   DIY_SH: scripts/lean.sh
   IPV6MOD_IN_FIRMWARE: true
@@ -249,7 +249,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S formal edition_Docker版_全插件
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S Docker容器版_全插件
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
