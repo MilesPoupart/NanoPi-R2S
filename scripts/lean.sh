@@ -20,14 +20,14 @@ rm -rf openwrt-package/luci-app-verysync
 # git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 
 # Add luci-app-netdata
-rm -rf ../lean/luci-app-netdata
+rm -rf ../../feeds/luci/applications/luci-app-netdata
 git clone --depth=1 https://github.com/sirpdboy/luci-app-netdata
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld.git
 
 # Add luci-app-unblockneteasemusic
-rm -rf ../lean/luci-app-unblockmusic
+rm -rf ../../feeds/luci/applications/luci-app-unblockmusic
 git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
 
 # Add luci-app-vssr <M>
@@ -67,15 +67,15 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 git clone --depth=1 https://github.com/iwrt/luci-app-ikoolproxy.git
 
 # Add luci-app-dockerman
-rm -rf ../lean/luci-app-docker
-rm -rf ../lean/luci-app-dockerman
+rm -rf ../../feeds/luci/collections/luci-lib-docker
+rm -rf ../../feeds/luci/applications/luci-app-dockerman
 git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
 git clone --depth=1 https://github.com/lisaac/luci-lib-docker
 
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
-rm -rf ../lean/luci-theme-argon
+rm -rf ../../feeds/luci/themes/luci-theme-argon
 rm -rf ./luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 cp -f $GITHUB_WORKSPACE/data/bg1.jpg luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
@@ -108,9 +108,9 @@ git clone --depth=1 https://github.com/destan19/OpenAppFilter
 popd
 
 # Add cpufreq
-rm -rf package/lean/luci-app-cpufreq
+rm -rf ../../feeds/luci/applications/luci-app-cpufreq
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
-ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
+ln -sf ../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
@@ -190,6 +190,11 @@ sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' pac
 sed -i "s/OpenWrt /DHDAXCW @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
 # Test kernel 5.10
 # sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
+
+# 修复r2s phy 复位断开无响应
+pushd target/linux/rockchip/patches-5.4
+cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
+popd
 
 # Custom configs
 git am $GITHUB_WORKSPACE/patches/*.patch

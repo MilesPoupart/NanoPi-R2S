@@ -1,0 +1,24 @@
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5168,6 +5168,9 @@ regulator_register(const struct regulator_desc *regulator_desc,
+ 		dangling_cfg_gpiod = false;
+ 		dangling_of_gpiod = false;
+ 	}
++	
++	if (rdev->desc->off_on_delay)
++		rdev->last_off_jiffy = jiffies;
+ 
+ 	/* register with sysfs */
+ 	rdev->dev.class = &regulator_class;
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -159,6 +159,9 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 						     &drvdata->desc);
+ 		if (IS_ERR(config))
+ 			return PTR_ERR(config);
++		
++		of_property_read_u32(pdev->dev.of_node,
++				     "off-on-delay-us", &drvdata->desc.off_on_delay);
+ 	} else {
+ 		config = dev_get_platdata(&pdev->dev);
+ 	}
