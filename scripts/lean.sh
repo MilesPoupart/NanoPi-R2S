@@ -191,6 +191,12 @@ sed -i "s/OpenWrt /DHDAXCW @ FusionWrt /g" package/lean/default-settings/files/z
 # Test kernel 5.10
 # sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
 
+# upgrade the kernel
+#pushd include
+#rm -rf kernel-5.4
+#wget https://raw.githubusercontent.com/DHDAXCW/lede/master/include/kernel-5.4
+#popd
+
 # 修复r2s phy 复位断开无响应
 pushd target/linux/rockchip/patches-5.4
 cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
