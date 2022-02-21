@@ -98,26 +98,27 @@ svn co https://github.com/openwrt/packages/trunk/utils/apk
 # Add luci-udptools
 svn co https://github.com/zcy85611/Openwrt-Package/trunk/luci-udptools
 svn co https://github.com/zcy85611/Openwrt-Package/trunk/udp2raw
-svn co https://github.com/zcy85611/Openwrt-Package/trunk/udpspeeder-tunnel
+svn co https://github.com/zcy85611/Openwrt-Package/trunk/udpspeeder
 
 # Add luci-app-poweroff
 git clone https://github.com/esirplayground/luci-app-poweroff
 
 # Add OpenAppFilter
 git clone --depth=1 https://github.com/destan19/OpenAppFilter
+
+# Add luci-aliyundrive-webdav
+rm -rf ../../feeds/luci/applications/luci-app-aliyundrive-webdav aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
+svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
 popd
 
 # Add cpufreq
-rm -rf ../../feeds/luci/applications/luci-app-cpufreq
+rm -rf feeds/luci/applications/luci-app-cpufreq
 svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
-ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
+ln -sf ./feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-
-# Add luci-aliyundrive-webdav
-svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/aliyundrive-webdav
-svn co https://github.com/messense/aliyundrive-webdav/trunk/openwrt/luci-app-aliyundrive-webdav
 
 # 动态DNS
 git clone --depth 1 https://github.com/small-5/ddns-scripts-dnspod package/lean/ddns-scripts_dnspod
@@ -126,7 +127,7 @@ git clone --depth 1 https://github.com/small-5/ddns-scripts-aliyun package/lean/
 # svn co https://github.com/openwrt/luci/branches/openwrt-18.06/applications/luci-app-ddns feeds/luci/applications/luci-app-ddns
 svn co https://github.com/QiuSimons/OpenWrt_luci-app/trunk/luci-app-tencentddns package/lean/luci-app-tencentddns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-aliddns feeds/luci/applications/luci-app-aliddns
-ln -sf ../../../feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
+ln -sf ./feeds/luci/applications/luci-app-aliddns ./package/feeds/luci/luci-app-aliddns
 
 # Add Pandownload
 pushd package/lean
