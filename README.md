@@ -17,7 +17,7 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 5. 继承Docker版全插件衣钵 继续编译全插件版本(不保证成功)
 6. 精简Docker版除以上区别外，基本与骷髅头的精简Docker版看齐，其他差别为：
     + 进一步去除baidupcs-web、tencentddns、unblockneteasemusic、uugamebooster、mentohust；
-    + 恢复保留jd-dailybonus、kodexplorer、minidlna、pptp-server、socat、verysync、webadmin、xlnetacc、ipv6等相关协议支持。
+    + 恢复保留kodexplorer、minidlna、pptp-server、socat、verysync、webadmin、xlnetacc、ipv6等相关协议支持。
 
 ## 驱动相关
 
