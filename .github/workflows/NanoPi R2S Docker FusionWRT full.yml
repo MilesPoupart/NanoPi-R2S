@@ -4,7 +4,7 @@ on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: 15 16 * * 1,6
+    - cron: 15 16 * * *
   # watch:
   #   types: started
 
@@ -23,7 +23,7 @@ env:
 jobs:
   Build:
     runs-on: ubuntu-20.04
-    if: github.repository == 'MilesPoupart/NanoPi-R2S-2021'
+    if: github.repository == 'MilesPoupart/NanoPi-R2S'
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
       PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
