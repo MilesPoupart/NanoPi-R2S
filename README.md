@@ -28,6 +28,7 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 
 9. 不生成rootfs格式的固件（全插件版本仅生成EXT4版本固件）
 10. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
+11. 修复在线编译时rdate缺失的问题
 
 ## 发布相关
-11. docker精简版即日起不再发布packages-server.zip、config.buildinfo、.manifest文件，需要相关插件安装包的可在最近一次全插件版本的发布中下载。
+12. docker精简版即日起不再发布packages-server.zip、config.buildinfo、.manifest文件，需要相关插件安装包的可在最近一次全插件版本的发布中下载。
