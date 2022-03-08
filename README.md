@@ -26,6 +26,7 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 
 ## 编译相关
 
-9. 不生成rootfs格式的固件（全插件版本仅生成EXT4版本固件）
+9. 由于仅发布docker版本，不生成rootfs格式、SQUASHFS格式的固件，仅生成ext4固件。
 10. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
 11. 修复在线编译时rdate缺失的问题
+12. 切换为5.10内核
