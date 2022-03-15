@@ -14,6 +14,7 @@ ln -sf ./feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
+rm -rf ./target/linux/rockchip/armv8/base-files/etc/hotplug.d
 
 # Clone community packages to package/community
 mkdir package/community
@@ -193,13 +194,7 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
 # Test kernel 5.10
-# sed -i 's/5.4/5.10/g' target/linux/rockchip/Makefile
-
-# upgrade the kernel
-#pushd include
-#rm -rf kernel-5.4
-#wget https://raw.githubusercontent.com/DHDAXCW/lede/master/include/kernel-5.4
-#popd
+sed -i 's/5.15/5.4/g' target/linux/rockchip/Makefile
 
 # 修复r2s phy 复位断开无响应
 pushd target/linux/rockchip/patches-5.4
