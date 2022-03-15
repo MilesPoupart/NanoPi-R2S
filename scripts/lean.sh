@@ -14,7 +14,6 @@ ln -sf ./feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-
 sed -i 's,1608,1800,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,2016,2208,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
 sed -i 's,1512,1608,g' feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/cpufreq
-rm -rf ./target/linux/rockchip/armv8/base-files/etc/hotplug.d
 
 # Clone community packages to package/community
 mkdir package/community
@@ -176,8 +175,8 @@ pushd po2lmo
 make && sudo make install
 popd
 
-# rm -rf ./package/kernel/linux/modules/video.mk
-# wget -P package/kernel/linux/modules/ https://github.com/immortalwrt/immortalwrt/raw/master/package/kernel/linux/modules/video.mk
+rm -rf ./package/kernel/linux/modules/video.mk
+wget -P package/kernel/linux/modules/ https://github.com/immortalwrt/immortalwrt/raw/master/package/kernel/linux/modules/video.mk
 
 # Change default shell to zsh
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
@@ -197,9 +196,9 @@ sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt /g" package/le
 sed -i 's/5.15/5.4/g' target/linux/rockchip/Makefile
 
 # 修复r2s phy 复位断开无响应
-pushd target/linux/rockchip/patches-5.4
-cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
-popd
+# pushd target/linux/rockchip/patches-5.4
+# cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
+# popd
 
 # Custom configs
 git am $GITHUB_WORKSPACE/patches/*.patch
