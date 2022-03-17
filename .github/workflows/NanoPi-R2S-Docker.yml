@@ -60,7 +60,7 @@ jobs:
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
-        clean: 'flase'
+        clean: 'false'
         
     - name: Free up disk space
       if: env.FREE_UP_DISK == 'true'
