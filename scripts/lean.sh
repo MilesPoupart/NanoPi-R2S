@@ -98,7 +98,7 @@ git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
 # Add extra wireless drivers
 svn co https://github.com/baxobox/add_rtl8812ac/trunk/files/package/kernel/rtl8812au-ac
-svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8821cu
+# svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8821cu
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8188eu
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192du
 svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl88x2bu
@@ -200,9 +200,9 @@ sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt /g" package/le
 sed -i 's/5.15/5.4/g' target/linux/rockchip/Makefile
 
 # 修复r2s phy 复位断开无响应
-# pushd target/linux/rockchip/patches-5.4
-# cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
-# popd
+pushd target/linux/rockchip/patches-5.4
+cp -f $GITHUB_WORKSPACE/scripts/patchs/999-r2s-phy.patch 999-r2s-phy.patch
+popd
 
 # Custom configs
 git am $GITHUB_WORKSPACE/patches/*.patch
