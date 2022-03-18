@@ -14,19 +14,17 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 2. 恢复加入Onliner User（luci-app-onliner）
 3. 恢复加入Watchcat（luci-app-watchcat）
 4. 加入iperf3
-5. 由于编译问题，暂时移除了rtl8812au-ac驱动
-6. 继承Docker版全插件衣钵 继续编译全插件版本(不保证成功)
-7. 精简Docker版除以上区别外，基本与骷髅头的精简Docker版看齐，其他差别为：
+5. 继承Docker版全插件衣钵 继续编译全插件版本(不保证成功)
+6. 精简Docker版除以上区别外，基本与骷髅头的精简Docker版看齐，其他差别为：
     + 进一步去除baidupcs-web、tencentddns、unblockneteasemusic、uugamebooster、mentohust；
     + 恢复保留kodexplorer、minidlna、pptp-server、socat、verysync、webadmin、xlnetacc、ipv6等相关协议支持。
 
 ## 驱动相关
 
-8. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
+7. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
 
 ## 编译相关
 
-9. 由于仅发布docker版本，不生成rootfs格式、SQUASHFS格式的固件，仅生成ext4固件。
-10. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL两个实验性选项
-11. 修复在线编译时rdate缺失的问题
-12. 切换为5.4内核
+8. 由于仅发布docker版本，不生成rootfs格式、SQUASHFS格式的固件，仅生成ext4固件。
+9. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL、CONFIG_TESTING_KERNEL等实验性选项（未启用）
+10. 修复在线编译时rdate缺失的问题
