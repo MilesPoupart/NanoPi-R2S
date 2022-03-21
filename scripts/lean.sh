@@ -190,7 +190,7 @@ chmod 777 target/linux/rockchip/armv8/base-files/etc/init.d/fa-rk3328-pwmfan
 chmod 777 target/linux/rockchip/armv8/base-files/usr/bin/start-rk3328-pwm-fan.sh
 
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.11.1/g' package/base-files/files/bin/config_generate
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
 # Test kernel 5.10
