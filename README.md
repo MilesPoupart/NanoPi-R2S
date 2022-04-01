@@ -24,9 +24,10 @@ Github Action终于不堪全插件版本的重负，大概率无法在线编译�
 ## 驱动相关
 
 7. 由于lean的lede项目中加入了rtl8821cu的驱动，移除lean.sh中的svn语句
+8. 由于rtl8812au-ac不适配5.10内核的问题，移除了该驱动
 
 ## 编译相关
 
-8. 由于仅发布docker版本，不生成rootfs格式、SQUASHFS格式的固件，仅生成ext4固件。
-9. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL、CONFIG_TESTING_KERNEL等实验性选项（未启用）
-10. 修复在线编译时rdate缺失的问题
+9. 由于仅发布docker版本，不生成rootfs格式、SQUASHFS格式的固件，仅生成ext4固件。
+10. 修改config中的相关表述，加入CONFIG_EXPERIMENTAL、CONFIG_HAS_TESTING_KERNEL、CONFIG_TESTING_KERNEL等实验性选项（未启用）
+11. 修复在线编译时rdate缺失的问题
