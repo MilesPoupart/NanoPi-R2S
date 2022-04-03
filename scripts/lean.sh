@@ -97,11 +97,11 @@ cp -f $GITHUB_WORKSPACE/data/bg1.jpg luci-theme-argon/htdocs/luci-static/argon/i
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
 # Add extra wireless drivers
-# svn co https://github.com/baxobox/add_rtl8812ac/trunk/files/package/kernel/rtl8812au-ac
+svn co https://github.com/baxobox/add_rtl8812ac/trunk/files/package/kernel/rtl8812au-ac
 # svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8821cu
-# svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8188eu
-# svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192du
-# svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl88x2bu
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8188eu
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192du
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl88x2bu
 
 # Add luci-app-smartdns & smartdns
 svn co https://github.com/281677160/openwrt-package/trunk/luci-app-smartdns
@@ -194,7 +194,7 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 sed -i '/uci commit system/i\uci set system.@system[0].hostname='FusionWrt'' package/lean/default-settings/files/zzz-default-settings
 sed -i "s/OpenWrt /DHDAXCW (modified by MilesPoupart) @ FusionWrt /g" package/lean/default-settings/files/zzz-default-settings
 # Test kernel 5.10
-sed -i 's/5.15/5.10/g' target/linux/rockchip/Makefile
+sed -i 's/5.15/5.4/g' target/linux/rockchip/Makefile
 
 # 修复r2s phy 复位断开无响应
 # pushd target/linux/rockchip/patches-5.4
