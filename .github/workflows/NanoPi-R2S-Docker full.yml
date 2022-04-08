@@ -3,8 +3,8 @@ name: NanoPi-R2S-Docker full
 on:
   repository_dispatch:
   workflow_dispatch:
-  schedule:
-    - cron: 15 16 * * *
+  # schedule:
+  #   - cron: 15 16 * * *
   # watch:
   #   types: started
 
