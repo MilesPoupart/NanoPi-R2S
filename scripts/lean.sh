@@ -4,9 +4,6 @@
 rm -rf ./feeds/packages/admin/netdata
 svn co https://github.com/DHDAXCW/packages/branches/ok/admin/netdata ./feeds/packages/admin/netdata
 
-# Add luci-app-passwall
-git clone --depth=1 -b latest https://github.com/MilesPoupart/openwrt-passwall ./package/lean/openwrt-passwall
-
 # Addd mosdns
 svn export https://github.com/QiuSimons/openwrt-mos/trunk/mosdns package/lean/mosdns
 svn export https://github.com/QiuSimons/openwrt-mos/trunk/luci-app-mosdns package/lean/luci-app-mosdns
@@ -43,6 +40,10 @@ git clone --depth=1 https://github.com/DHDAXCW/helloworld
 # Add luci-app-unblockneteasemusic
 rm -rf ../../customfeeds/luci/applications/luci-app-unblockmusic
 git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
+
+# Add luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall
 
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
