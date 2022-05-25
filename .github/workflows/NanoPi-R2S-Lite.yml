@@ -174,7 +174,7 @@ jobs:
           keep_latest: 20
           delete_tags: true
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
