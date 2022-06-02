@@ -19,6 +19,9 @@ rm -rf ./package/kernel/linux/modules/fs.mk
 wget -P ./package/kernel/linux/modules/ https://raw.githubusercontent.com/LPDDR6-10000MHz/lede/master/package/kernel/linux/modules/fs.mk
 rm -rf ./target/linux/generic/pending-5.10/701-net-ethernet-mtk_eth_soc-add-ipv6-flow-offloading-support.patch
 
+rm -rf package/kernel/mac80211
+svn co https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/mac80211 package/kernel/mac80211
+
 # Clone community packages to package/community
 mkdir package/community
 pushd package/community
@@ -41,6 +44,10 @@ git clone --depth=1 https://github.com/fw876/helloworld.git
 # Add luci-app-unblockneteasemusic
 rm -rf ../../customfeeds/luci/applications/luci-app-unblockmusic
 git clone --depth=1 https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
+
+# Add luci-app-passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+svn co https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall
 
 # Add luci-app-vssr <M>
 git clone --depth=1 https://github.com/jerrykuku/lua-maxminddb.git
