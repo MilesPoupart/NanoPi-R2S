@@ -1,3 +1,11 @@
+#=================================================
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
+#=================================================
+
 name: NanoPi-R2S-Docker Lite
 
 on:
@@ -83,10 +91,6 @@ jobs:
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
     
-    - name: MOD index file
-      run: |
-         cd $OPENWRTROOT/package/lean/autocore/files/arm
-         sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Telegram %></td><td><a href="https://t.me/DHDAXCW"><%:电报交流群%></a></td></tr>' index.htm
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
@@ -105,7 +109,7 @@ jobs:
       id: package
       run: |
         cd $OPENWRTROOT
-        ../scripts/modify_config.sh
+        # ../scripts/modify_config.sh
         cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -239,28 +243,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux-5.15-Docker容器版_稳定
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux-5.4-Docker容器版_稳定
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
           retain_days: 1
           keep_minimum_runs: 1
 
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@v0.1.0
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        with:
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
           keep_latest: 20
           delete_tags: true
-        env:
+      env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete Artifacts
-        uses: geekyeggo/delete-artifact@v1
-        with:
+    - name: Delete Artifacts
+      uses: geekyeggo/delete-artifact@v1
+      with:
           name: |
             bin-archive

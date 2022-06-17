@@ -1,4 +1,12 @@
 #!/bin/bash
+#=================================================
+# System Required: Linux
+# Version: 1.0
+# Lisence: MIT
+# Author: SuLingGG
+# Blog: https://mlapp.cn
+#=================================================
+
 error_font="\033[31m[Error]$\033[0m "
 success_font="\033[32m[Success]\033[0m "
 info_font="\033[36m[Info]\033[0m "
