@@ -17,8 +17,8 @@ on:
   #   types: started
 
 env:
-  REPO_URL: https://github.com/DHDAXCW/op-rockchip
-  REPO_BRANCH: stable
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   CONFIG_FILE: configs/lean/lean_beggar.config
   DIY_SH: scripts/lean.sh
   KMODS_IN_FIRMWARE: true
@@ -88,11 +88,11 @@ jobs:
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j72
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j72
-        make target/compile -j$(nproc) || make target/compile -j72 IGNORE_ERRORS=1
+        make tools/compile -j$(nproc) || make tools/compile -j24
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j24
+        make target/compile -j$(nproc) || make target/compile -j24 IGNORE_ERRORS=1
         make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j72 IGNORE_ERRORS=1
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j24 IGNORE_ERRORS=1
         make package/index
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
