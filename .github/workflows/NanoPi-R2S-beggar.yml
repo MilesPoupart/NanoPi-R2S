@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: NanoPi-R2S-beggar
+name: NanoPi-R2S-乞丐
 
 on:
   repository_dispatch:
