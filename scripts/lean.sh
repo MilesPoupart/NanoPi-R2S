@@ -11,6 +11,8 @@
 mkdir package/community
 pushd package/community
 
+# Add luci-app-irqbalance by QiuSimons https://github.com/QiuSimons/OpenWrt-Add
+svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/luci-app-irqbalance
 
 # Add luci-app-passwall
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
@@ -53,9 +55,7 @@ svn co https://github.com/Boos4721/OpenWrt-Packages/trunk/luci-app-adguardhome
 
 # Add ddnsto & linkease
 svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-ddnsto
-svn co https://github.com/linkease/nas-packages-luci/trunk/luci/luci-app-linkease
 svn co https://github.com/linkease/nas-packages/trunk/network/services/ddnsto
-svn co https://github.com/linkease/nas-packages/trunk/network/services/linkease
 
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
