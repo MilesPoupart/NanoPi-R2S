@@ -1,5 +1,7 @@
 ## 基于DHDAXCW骷髅头的R2S固件（Docker版本）进行修改
 
+<img src="https://img.shields.io/github/downloads/MilesPoupart/NanoPi-R2S/total.svg?style=for-the-badge&color=32C955"/>
+
 Github Action终于不堪全插件版本的重负，大概率无法在线编译了。全插件版本将在必要时手动编译可用版本。
 
 自动编译每周三、周六编译**Docker精简版**。<br>
