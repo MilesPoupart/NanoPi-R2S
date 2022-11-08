@@ -2,11 +2,9 @@
 
 <img src="https://img.shields.io/github/downloads/MilesPoupart/NanoPi-R2S/total.svg?style=for-the-badge&color=32C955"/>
 
-Github Action终于不堪全插件版本的重负，大概率无法在线编译了。全插件版本将在必要时手动编译可用版本。
 
-自动编译每周三、周六编译**Docker精简版**。<br>
-每天编译**Docker全插件版**（大概率不成功）。<br>
-手动触发编译的**Docker精简版**、**Docker全插件版**将在有重要更新内容后更新。
+由于免费的Github-hosted runners磁盘空间由100GB大幅缩水到[14GB](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources)，
+**在线编译已不可行**。将在一个月内全面切换到自托管设备编译，固件更新将在上游更新后进行。
 
 **后台地址仍为192.168.2.1！！！**
 
