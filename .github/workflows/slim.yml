@@ -6,29 +6,30 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: NanoPi-R2S-乞丐
+name: NanoPi-R2S-精简
 
 on:
   repository_dispatch:
   workflow_dispatch:
-  #schedule:
-    #- cron: 0 17 * * *
+  # schedule:
+  #   - cron: 0 17 * * *
   # watch:
   #   types: started
 
 env:
   REPO_URL: https://github.com/DHDAXCW/lede-rockchip
   REPO_BRANCH: stable
-  CONFIG_FILE: configs/lean/lean_beggar.config
+  CONFIG_FILE: configs/lean/lean_stable.config
   DIY_SH: scripts/lean.sh
   KMODS_IN_FIRMWARE: true
+  UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
 jobs:
   Build:
-    runs-on: self-hosted
-    if: github.repository == 'DHDAXCW/NanoPi-R2S-rk3328'
+    runs-on: ubuntu-20.04
+    if: github.repository == 'MilesPoupart/NanoPi-R2S'
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
       PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
@@ -41,11 +42,30 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Initialization Environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004) tree
+        sudo apt-get -y install python3 git-core curl libfuse-dev
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+
     - name: Clone Source Code
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
+        
+    - name: Cache
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        prefix: ${{ github.workspace }}/openwrt
+        clean: 'false'
         
     - name: Update Feeds
       id: update
@@ -58,11 +78,12 @@ jobs:
         git clone --depth=1 https://github.com/DHDAXCW/luci customfeeds/luci
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
-
+    
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
         ./scripts/feeds install -a
+
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files
@@ -70,9 +91,10 @@ jobs:
         chmod +x scripts/*.sh
         cd $OPENWRTROOT
         ../$DIY_SH
-        ../scripts/preset-clash-core.sh armv8
+        ../scripts/preset-clash-core.sh arm64
         ../scripts/preset-terminal-tools.sh
         make defconfig
+        
     - name: Download Package
       id: package
       run: |
@@ -87,11 +109,11 @@ jobs:
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j72
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j72
-        make target/compile -j$(nproc) || make target/compile -j72 IGNORE_ERRORS=1
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
         make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j72 IGNORE_ERRORS=1
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
         make package/index
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
@@ -108,7 +130,7 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "FIRMWARE=$PWD" >> $GITHUB_OUTPUT
         echo "COMPILE_STATUS=success" >> $GITHUB_OUTPUT
-        
+
     - name: Generate Firmware
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
       id: generate
@@ -136,21 +158,29 @@ jobs:
         sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
-        rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
-        rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
-        rm -rf bin/targets/rockchip/armv8/config.buildinfo
-        rm -rf bin/targets/rockchip/armv8/packages-server.zip
+        pushd bin/targets/rockchip/armv8
+        rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
+        rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
+        rm -rf config.buildinfo
+        rm -rf packages-server.zip
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz slim-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz slim-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+        popd
         make checksum
+        mv bin/targets/rockchip/armv8/sha256sums bin/targets/rockchip/armv8/slim-sha256sums
         echo "GENERATE_STATUS=success" >> $GITHUB_OUTPUT
-        
     - name: Generate release tag
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-          echo "release_tag=$(date +"%Y.%m.%d")-Lean5" >> $GITHUB_OUTPUT
+          echo "release_tag=$(date +"%Y.%m.%d")-Lean1" >> $GITHUB_OUTPUT
           echo "release_date=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
           touch release.txt
-          echo "后台地址：192.168.11.1" >> release.txt
+          echo "后台地址：192.168.11.1
+                full   = 全插件
+                docker = 带docker
+                slim   = 精简版
+                beggar = 乞丐版" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
           
     - name: Upload firmware to release
@@ -159,28 +189,29 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux.5.4_乞丐版
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux.5.4_固件下载
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-          retain_days: 1
-          keep_minimum_runs: 1
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+            retain_days: 1
+            keep_minimum_runs: 1
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-          keep_latest: 20
-          delete_tags: true
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@v0.1.0
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        with:
+            keep_latest: 20
+            delete_tags: true
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Delete Artifacts
-      uses: geekyeggo/delete-artifact@v1
-      with:
-          name: |
-            bin-archive
+      - name: Delete Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+            name: |
+              bin-archive
+
