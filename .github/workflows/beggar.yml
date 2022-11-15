@@ -28,7 +28,7 @@ env:
 jobs:
   Build:
     runs-on: self-hosted
-    if: github.repository == 'DHDAXCW/NanoPi-R2S-rk3328'
+    if: github.repository == 'MilesPoupart/NanoPi-R2S'
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
       PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
@@ -155,7 +155,7 @@ jobs:
           echo "release_tag=$(date +"%Y.%m.%d")-Lean1" >> $GITHUB_OUTPUT
           echo "release_date=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
           touch release.txt
-          echo "后台地址：192.168.11.1
+          echo "后台地址：192.168.2.1
                 full   = 全插件
                 docker = 带docker
                 slim   = 精简版

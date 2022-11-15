@@ -6,31 +6,28 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: NanoPi-R2S-Docker Lite
+name: NanoPi-R2S-容器
 
 on:
   repository_dispatch:
   workflow_dispatch:
-  # schedule:
-  #   - cron: 15 16 * * 2,5
+  #schedule:
+    #- cron: 0 17 * * *
   # watch:
   #   types: started
 
 env:
   REPO_URL: https://github.com/DHDAXCW/lede-rockchip
   REPO_BRANCH: stable
-  CONFIG_FILE: configs/lean/lean_docker_lite.config
+  CONFIG_FILE: configs/lean/lean_docker.config
   DIY_SH: scripts/lean.sh
   KMODS_IN_FIRMWARE: true
-  UPLOAD_WETRANSFER: true
-  UPLOAD_COWTRANSFER: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  FREE_UP_DISK : true
 
 jobs:
   Build:
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     if: github.repository == 'MilesPoupart/NanoPi-R2S'
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
@@ -44,42 +41,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Initialization Environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
-        sudo -E apt-get -qq update
-        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004) tree
-        sudo apt-get -y install python3 git-core curl rdate libfuse-dev
-        sudo -E apt-get -qq autoremove --purge
-        sudo -E apt-get -qq clean
-        sudo timedatectl set-timezone "$TZ"
     - name: Clone Source Code
       run: |
         df -hT $PWD
-        git config --global user.email "git@github.com"
-        git config --global user.name "GitHub"
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         
-    - name: Cache
-      uses: klever1988/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        prefix: ${{ github.workspace }}/openwrt
-        clean: 'false'
-        
-    - name: Free up disk space
-      if: env.FREE_UP_DISK == 'true'
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/staging_dir /mnt/openwrt/build_dir/hostpkg openwrt/build_dir
-        ln -sf /mnt/openwrt/dl openwrt/dl
-        ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
-        ln -sf /mnt/openwrt/build_dir/hostpkg openwrt/build_dir/hostpkg
-
     - name: Update Feeds
       id: update
       run: |
@@ -87,7 +54,7 @@ jobs:
         echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
         echo "OPENWRTROOT=$PWD" >> $GITHUB_OUTPUT
         mkdir customfeeds
-        git clone --depth=1 https://github.com/MilesPoupart/packages customfeeds/packages
+        git clone --depth=1 https://github.com/DHDAXCW/packages customfeeds/packages
         git clone --depth=1 https://github.com/DHDAXCW/luci customfeeds/luci
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
@@ -106,11 +73,11 @@ jobs:
         ../scripts/preset-clash-core.sh arm64
         ../scripts/preset-terminal-tools.sh
         make defconfig
+
     - name: Download Package
       id: package
       run: |
         cd $OPENWRTROOT
-        # ../scripts/modify_config.sh
         cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -121,11 +88,11 @@ jobs:
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
-        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+        make tools/compile -j$(nproc) || make tools/compile -j40
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j40
+        make target/compile -j$(nproc) || make target/compile -j40 IGNORE_ERRORS=1
         make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j40 IGNORE_ERRORS=1
         make package/index
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
@@ -207,23 +174,23 @@ jobs:
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*
 
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-            retain_days: 1
-            keep_minimum_runs: 1
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+          retain_days: 1
+          keep_minimum_runs: 1
 
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@v0.1.0
-        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        with:
-            keep_latest: 20
-            delete_tags: true
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Remove old Releases
+      uses: dev-drprasad/delete-older-releases@v0.1.0
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      with:
+          keep_latest: 20
+          delete_tags: true
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Delete Artifacts
-        uses: geekyeggo/delete-artifact@v1
-        with:
-            name: |
-              bin-archive
+    - name: Delete Artifacts
+      uses: geekyeggo/delete-artifact@v1
+      with:
+          name: |
+            bin-archive
