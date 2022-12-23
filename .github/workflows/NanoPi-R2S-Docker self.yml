@@ -11,8 +11,8 @@ name: NanoPi-R2S-容器-self
 on:
   repository_dispatch:
   workflow_dispatch:
-  #schedule:
-    #- cron: 0 17 * * *
+  # schedule:
+  #   - cron: 0 17 * * *
   # watch:
   #   types: started
 
@@ -143,10 +143,10 @@ jobs:
         sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
-        rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
-        rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
-        rm -rf bin/targets/rockchip/armv8/config.buildinfo
-        rm -rf bin/targets/rockchip/armv8/packages-server.zip
+        # rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
+        # rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
+        # rm -rf bin/targets/rockchip/armv8/config.buildinfo
+        # rm -rf bin/targets/rockchip/armv8/packages-server.zip
         make checksum
         echo "GENERATE_STATUS=success" >> $GITHUB_OUTPUT
 

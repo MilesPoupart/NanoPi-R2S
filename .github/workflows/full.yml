@@ -11,8 +11,8 @@ name: NanoPi-R2S-全插件
 on:
   repository_dispatch:
   workflow_dispatch:
-  #schedule:
-    #- cron: 0 17 * * *
+  # schedule:
+  #   - cron: 0 17 * * *
   # watch:
   #   types: started
 
@@ -67,8 +67,8 @@ jobs:
         echo "OPENWRTROOT=$PWD" >> $GITHUB_ENV
         echo "OPENWRTROOT=$PWD" >> $GITHUB_OUTPUT
         mkdir customfeeds
-        git clone --depth=1 https://github.com/DHDAXCW/packages customfeeds/packages
-        git clone --depth=1 https://github.com/DHDAXCW/luci customfeeds/luci
+        git clone --depth=1 https://github.com/MilesPoupart/packages customfeeds/packages
+        git clone --depth=1 https://github.com/MilesPoupart/luci customfeeds/luci
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
 
@@ -152,10 +152,10 @@ jobs:
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
         pushd bin/targets/rockchip/armv8
-        rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
-        rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
-        rm -rf config.buildinfo
-        rm -rf packages-server.zip
+        # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
+        # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
+        # rm -rf config.buildinfo
+        # rm -rf packages-server.zip
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz full-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz full-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
         popd
