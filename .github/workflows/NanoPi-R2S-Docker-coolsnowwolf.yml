@@ -68,6 +68,7 @@ jobs:
       run: |
         cd $OPENWRTROOT
         ./scripts/feeds install -a
+        
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files

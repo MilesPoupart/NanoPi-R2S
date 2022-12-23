@@ -68,6 +68,7 @@ jobs:
       run: |
         cd $OPENWRTROOT
         ./scripts/feeds install -a
+
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files
@@ -143,11 +144,16 @@ jobs:
         sed -i "s/http:\/\/192.168.123.100:2345\/snapshots/https:\/\/openwrt.cc\/snapshots\/$(date +"%Y-%m-%d")\/lean/g" files/etc/opkg/distfeeds.conf.mirror
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
-        # rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
-        # rm -rf bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
-        # rm -rf bin/targets/rockchip/armv8/config.buildinfo
-        # rm -rf bin/targets/rockchip/armv8/packages-server.zip
+        pushd bin/targets/rockchip/armv8
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest docker-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
+        # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
+        mv config.buildinfo docker-config.buildinfo
+        mv packages-server.zip docker-packages-server.zip
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz docker-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz docker-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+        popd
         make checksum
+        mv bin/targets/rockchip/armv8/sha256sums bin/targets/rockchip/armv8/docker-sha256sums
         echo "GENERATE_STATUS=success" >> $GITHUB_OUTPUT
 
     - name: Generate release tag
@@ -157,7 +163,11 @@ jobs:
           echo "release_tag=$(date +"%Y.%m.%d")-Lean1" >> $GITHUB_OUTPUT
           echo "release_date=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
           touch release.txt
-          echo "后台地址：192.168.2.1" >> release.txt
+          echo "后台地址：192.168.2.1
+                full   = 全插件
+                docker = 带docker
+                slim   = 精简版
+                beggar = 乞丐版" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
           
     - name: Upload firmware to release
@@ -166,7 +176,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux-5.4_Docker容器版_稳定
+          name: ${{ steps.tag.outputs.release_date }} NanoPi-R2S-linux.5.4_固件下载
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
           files: ${{ env.FIRMWARE }}/*

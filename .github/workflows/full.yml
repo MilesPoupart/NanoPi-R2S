@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: NanoPi-R2S-全插件
+name: NanoPi-R2S-全插件-self
 
 on:
   repository_dispatch:
@@ -41,19 +41,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Initialization Environment
-      env:
-        DEBIAN_FRONTEND: noninteractive
-      run: |
-        echo -e "Total CPU cores\t: $(nproc)"
-        cat /proc/cpuinfo | grep 'model name'
-        free -h
-        uname -a
-        [ -f /proc/version ] && cat /proc/version
-        [ -f /etc/issue.net ] && cat /etc/issue.net
-        [ -f /etc/issue ] && cat /etc/issue
-        ulimit -a
-        
     - name: Clone Source Code
       run: |
         df -hT $PWD
@@ -72,11 +59,16 @@ jobs:
         chmod +x ../scripts/*.sh
         ../scripts/hook-feeds.sh
 
+    - name: MOD index file
+      run: |
+         cd $OPENWRTROOT/package/lean/autocore/files/arm
+         sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Telegram %></td><td><a href="https://t.me/DHDAXCW"><%:电报交流群%></a></td></tr>' index.htm
+
     - name: Install Feeds
       run: |
         cd $OPENWRTROOT
         ./scripts/feeds install -a
-        
+
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files
@@ -87,11 +79,12 @@ jobs:
         ../scripts/preset-clash-core.sh arm64
         ../scripts/preset-terminal-tools.sh
         make defconfig
-        
+
     - name: Download Package
       id: package
       run: |
         cd $OPENWRTROOT
+        ../scripts/modify_config.sh
         cat .config
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
@@ -102,11 +95,11 @@ jobs:
       run: |
         cd $OPENWRTROOT
         echo -e "$(nproc) thread compile"
-        make tools/compile -j$(nproc) || make tools/compile -j40
-        make toolchain/compile -j$(nproc) || make toolchain/compile -j40
-        make target/compile -j$(nproc) || make target/compile -j40 IGNORE_ERRORS=1
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
         make diffconfig
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j40 IGNORE_ERRORS=1
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
         make package/index
         cd $OPENWRTROOT/bin/packages/*
         PLATFORM=$(basename `pwd`)
@@ -123,7 +116,7 @@ jobs:
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "FIRMWARE=$PWD" >> $GITHUB_OUTPUT
         echo "COMPILE_STATUS=success" >> $GITHUB_OUTPUT
-        
+
     - name: Generate Firmware
       if: steps.compile.outputs.COMPILE_STATUS == 'success'
       id: generate
@@ -152,10 +145,10 @@ jobs:
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
         pushd bin/targets/rockchip/armv8
-        # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
+        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest full-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
         # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
-        # rm -rf config.buildinfo
-        # rm -rf packages-server.zip
+        mv config.buildinfo full-config.buildinfo
+        mv packages-server.zip full-packages-server.zip
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz full-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz full-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
         popd
