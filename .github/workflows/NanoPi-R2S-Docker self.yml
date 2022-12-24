@@ -148,10 +148,15 @@ jobs:
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest docker-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
         # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
         mv config.buildinfo docker-config.buildinfo
-        mv packages-server.zip docker-packages-server.zip
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz docker-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz
-        mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz docker-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
+        # mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz docker-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz
         popd
+        mkdir -p server/web/snapshots/targets/$TARGET/$SUBTARGET
+        cp -r $OPENWRTROOT/bin/packages server/web/snapshots
+        cp -r $OPENWRTROOT/bin/targets/$TARGET/$SUBTARGET/packages server/web/snapshots/targets/$TARGET/$SUBTARGET
+        mv server packages-server
+        zip -qrm docker-packages-server.zip packages-server
+        mv docker-packages-server.zip $OPENWRTROOT/bin/targets/$TARGET/$SUBTARGET
         make checksum
         mv bin/targets/rockchip/armv8/sha256sums bin/targets/rockchip/armv8/docker-sha256sums
         echo "GENERATE_STATUS=success" >> $GITHUB_OUTPUT
