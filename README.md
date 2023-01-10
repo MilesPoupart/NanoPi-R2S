@@ -16,7 +16,7 @@
 2. 恢复加入Onliner User（luci-app-onliner）
 3. 恢复加入Watchcat（luci-app-watchcat）
 4. 恢复加入turboacc（luci-app-turboacc）
-5. 加入iperf3
+5. 加入iperf3、netspeedtest、partexp
 6. netdata采用sirpdboy源
 7. 其他插件差别为：
     + 进一步去除airplay2、aliddns、brook-server、cifs-mount、familycloud、fileassistant、filebrowser、filetransfer、frpc、frps、guest-wifi、haproxy-tcp、hd-idle、jd-dailybonus、ikoolproxy、music-remote-center、mwan3、mwan3helper、n2n_v2、nfs、nps、openvpn-server、ps3netsrv、rclone、softethervpn、sqm、syncdial、tencentddns、transmission、trojan-server、unblockneteasemusic、uugamebooster、wifischedule、mentohust；
