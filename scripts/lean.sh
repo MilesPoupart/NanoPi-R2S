@@ -33,12 +33,6 @@ rm -rf openwrt-package/luci-app-verysync
 rm -rf ../../customfeeds/luci/applications/luci-app-netdata
 git clone --depth=1 https://github.com/sirpdboy/luci-app-netdata
 
-# Add luci-app-partexp
-git clone --depth=1 https://github.com/sirpdboy/luci-app-partexp
-
-# Add luci-app-netspeedtest
-git clone --depth=1 https://github.com/sirpdboy/NetSpeedTest
-
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
 
