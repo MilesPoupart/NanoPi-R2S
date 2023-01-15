@@ -39,6 +39,9 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-partexp
 # Add luci-app-netspeedtest
 git clone --depth=1 https://github.com/sirpdboy/NetSpeedTest
 
+# Add luci-app-autotimeset
+git clone https://github.com/sirpdboy/luci-app-autotimeset
+
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
 
