@@ -159,7 +159,7 @@ echo -e "_/____/____(___(_/_____/_/__/_(___/_/___/_(___/__/__|____/_____(_ __" >
 echo -e "                                             /                      " >> package/base-files/files/etc/banner
 echo -e "                                         (_ /                       " >> package/base-files/files/etc/banner
 echo -e "--------------------------------------------------------------------" >> package/base-files/files/etc/banner
-echo -e "           MilesPoupart's MagicWrt built on "$(date +%Y.%m.%d)"\n____________________________________________________________________" >> package/base-files/files/etc/banner
+echo -e "           MilesPoupart's HarmonyWrt built on "$(date +%Y.%m.%d)"\n____________________________________________________________________" >> package/base-files/files/etc/banner
 
 # 风扇脚本
 sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
