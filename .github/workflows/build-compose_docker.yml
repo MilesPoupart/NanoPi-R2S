@@ -316,7 +316,7 @@ jobs:
           keep_latest: 20
           delete_tags: true
       env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Remove Images
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
