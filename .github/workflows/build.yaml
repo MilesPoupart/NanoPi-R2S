@@ -252,7 +252,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-          name: ${{ needs.compile-package.outputs.RELEASE_DATE }} NanoPi-R4S-R4SE-linux.5.4_固件下载
+          name: ${{ needs.compile-package.outputs.RELEASE_DATE }} NanoPi-R2S-linux.5.4_固件下载
           tag_name: ${{ needs.compile-package.outputs.RELEASE_TAG }}
           body_path: release.txt
           files: ${{ needs.compile-package.outputs.FIRMWARE }}/*
