@@ -1,34 +1,42 @@
-name: source_docker
+name: source
 
 on:
   repository_dispatch:
   workflow_dispatch:
-  #schedule:
-    #- cron: 0 17 * * *
+    inputs:
+      compile_version:
+        description: 'Version'
+        required: true
+        default: full_lite
+        type: choice
+        options:
+        - docker_lite
+        - full_lite
+        - docker
+        - stable
+        - beggar
+  # schedule:
+  #   - cron: 0 17 * * *
   # watch:
   #   types: started
 
 env:
   REPO_URL: https://github.com/DHDAXCW/lede-rockchip
   REPO_BRANCH: stable
-  CONFIG_FILE: configs/lean/lean_docker_lite.config
+  CONFIG_FILE: configs/lean/lean_${{ inputs.compile_version }}.config
   DIY_SH: scripts/lean.sh
   KMODS_IN_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  # COMMIT_ID: ${{ vars.COMMIT_ID }}
+  IMAGE: milespoupart/action-openwrt-cache:r2s_${{ inputs.compile_version }}
+  COMMIT_ID: ${{ vars.COMMIT_ID }}
 
 jobs:
 
-  Download:
+  source-code:
     runs-on: ubuntu-22.04
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
-      PLATFORM: ${{ steps.compile.outputs.PLATFORM }}
-      TARGET: ${{ steps.compile.outputs.TARGET }}
-      SUBTARGET: ${{ steps.compile.outputs.SUBTARGET }}
-      FIRMWARE: ${{ steps.compile.outputs.FIRMWARE }}
-      GENERATE_STATUS: ${{ steps.generate.outputs.GENERATE_STATUS }}
 
     steps:
     - name: Checkout
@@ -91,7 +99,7 @@ jobs:
     - name: MOD index file
       run: |
          cd $OPENWRTROOT/package/lean/autocore/files/arm
-         sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Github %></td><td><a href="https://github.com/MilesPoupart/NanoPi-R5S-R5C"><%:固件下载%></a></td></tr>' index.htm
+         sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Github %></td><td><a href="https://github.com/MilesPoupart/NanoPi-R2S"><%:固件下载%></a></td></tr>' index.htm
 
     - name: Install Feeds
       run: |
@@ -130,7 +138,7 @@ jobs:
         context: ./
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_IMAGE }}
+        tags: ${{ env.IMAGE }}
         
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
