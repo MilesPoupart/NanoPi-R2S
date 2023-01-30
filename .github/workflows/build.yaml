@@ -250,7 +250,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: needs.compile-package.outputs.RELEASE_STATUS == 'success' && !cancelled() && env.UPLOAD_RELEASE == 'true'
       env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           name: ${{ needs.compile-package.outputs.RELEASE_DATE }} NanoPi-R2S-linux.5.4_固件下载
           tag_name: ${{ needs.compile-package.outputs.RELEASE_TAG }}
@@ -270,7 +270,7 @@ jobs:
           keep_latest: 20
           delete_tags: true
       env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v2
