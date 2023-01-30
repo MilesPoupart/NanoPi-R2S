@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: build-compose_full
+name: build-compose_old
 
 on:
   repository_dispatch:

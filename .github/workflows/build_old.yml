@@ -1,4 +1,4 @@
-name: build_full
+name: build_old
 
 on:
   repository_dispatch:
