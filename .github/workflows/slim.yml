@@ -153,7 +153,7 @@ jobs:
         echo "GENERATE_STATUS=success" >> $GITHUB_OUTPUT
     - name: Generate release tag
       id: tag
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: steps.generate.outputs.GENERATE_STATUS == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
           echo "release_tag=$(date +"%Y.%m.%d")-Lean1" >> $GITHUB_OUTPUT
           echo "release_date=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
