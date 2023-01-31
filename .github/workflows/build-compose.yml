@@ -344,7 +344,7 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
           echo "RELEASE_TAG=$(date +"%Y.%m.%d")-Lean1" >> $GITHUB_OUTPUT
-          echo "RELEASE_DATA=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
+          echo "RELEASE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_OUTPUT
           touch release.txt
           echo "后台地址：192.168.2.1
                 full_lite   = 全插件(精简)
