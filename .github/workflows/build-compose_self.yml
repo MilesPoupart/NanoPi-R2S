@@ -210,11 +210,6 @@ jobs:
       OPENWRTROOT: ${{ steps.clean.outputs.OPENWRTROOT }}
 
     steps:
-    - name: Show choice
-      run: |
-        echo "Compile Version=${{ inputs.compile_version }}"
-        echo "Tsak settings=${{ inputs.task_setting }}"
-        echo "Compile machine=${{ inputs.use_machine }}"
 
     - name: Initialization Environment
       env:
