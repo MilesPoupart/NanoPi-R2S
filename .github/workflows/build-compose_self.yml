@@ -31,6 +31,15 @@ on:
         - docker
         - stable
         - beggar
+      task_setting:
+        description: 'Task Settings'
+        required: true
+        default : build-compose
+        type: choice
+        options:
+        - build-compose
+        - build-only
+        - source-only
   # schedule:
   #   - cron: 0 17 * * *
   # watch:
@@ -49,12 +58,19 @@ env:
 
 jobs:
 
-  source-code:
+  DownloadSourceCode:
+    if: ${{ inputs.task_setting }} == "source-only" || ${{ inputs.task_setting }} == "build-compose"
     runs-on: ubuntu-22.04
     outputs:
       OPENWRTROOT: ${{ steps.update.outputs.OPENWRTROOT }}
 
     steps:
+    - name: Show choice
+      run: |
+        echo "Compile Version=${{ inputs.compile_version }}"
+        echo "Tsak settings=${{ inputs.task_setting }}"
+        echo "Compile machine=${{ inputs.use_machine }}"
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -62,6 +78,17 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        echo "警告⚠"
+        echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
+        echo -e "已知CPU型号（降序）：8370C，8272CL，8171M，E5-2673 \n"
+        echo "--------------------------CPU信息--------------------------"
+        echo "CPU物理数量：$(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
+        echo -e "CPU核心信息：$(cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c) \n"
+        echo "--------------------------内存信息--------------------------"
+        echo "已安装内存详细信息："
+        echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
+        echo "--------------------------硬盘信息--------------------------"
+        echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'
         free -h
@@ -160,16 +187,21 @@ jobs:
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
 
-  compile-init:
+  CompileInitialize:
+    if: ${{ inputs.task_setting }} == "build-only" || ${{ inputs.task_setting }} == "build-compose"
     runs-on: [self-hosted, Linux, X64, "${{ inputs.use_machine }}"]
     timeout-minutes: 1440
-    needs: [source-code]
 
     outputs:
       OPENWRTROOT: ${{ steps.clean.outputs.OPENWRTROOT }}
 
     steps:
-  
+    - name: Show choice
+      run: |
+        echo "Compile Version=${{ inputs.compile_version }}"
+        echo "Tsak settings=${{ inputs.task_setting }}"
+        echo "Compile machine=${{ inputs.use_machine }}"
+
     - name: Initialization Environment
       env:
         DEBIAN_FRONTEND: noninteractive
@@ -232,10 +264,10 @@ jobs:
         cd $OPENWRTROOT
         cat .config
 
-  compile-toolchain:
+  CompileToolchain:
     runs-on: [self-hosted, Linux, X64, "${{ inputs.use_machine }}"]
     timeout-minutes: 1440
-    needs: [compile-init]
+    needs: [CompileInitialize]
 
     steps:
     - name: Compile toolchain
@@ -248,10 +280,10 @@ jobs:
         make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
         make diffconfig
   
-  compile-package:
+  CompileFirmware:
     runs-on: [self-hosted, Linux, X64, "${{ inputs.use_machine }}"]
     timeout-minutes: 1440
-    needs: [compile-init, compile-toolchain]
+    needs: [CompileInitialize, CompileToolchain]
 
     outputs:
       OPENWRTROOT: ${{ steps.compile.outputs.OPENWRTROOT }}
@@ -352,10 +384,10 @@ jobs:
                 beggar = 乞丐版" >> release.txt
           echo "RELEASE_STATUS=success" >> $GITHUB_OUTPUT
 
-  upload:
+  UploadFirmware:
     runs-on: [self-hosted, Linux, X64, "${{ inputs.use_machine }}"]
     timeout-minutes: 1440
-    needs: [compile-package]
+    needs: [CompileFirmware]
 
     steps:
   
