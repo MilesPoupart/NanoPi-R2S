@@ -15,7 +15,7 @@ on:
       use_machine:
         description: 'Machine'
         required: true
-        default: 7700HQ
+        default: 10700
         type: choice
         options:
         - 7700HQ
