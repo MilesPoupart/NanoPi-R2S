@@ -281,7 +281,7 @@ jobs:
     - name: Compile toolchain
       id: compile
       run: | 
-        cd ${{ needs.compile-init.outputs.OPENWRTROOT }}
+        cd ${{ needs.CompileInitialize.outputs.OPENWRTROOT }}
         echo -e "$(nproc) thread compile"
         make tools/compile -j$(nproc) || make tools/compile -j1 V=s
         make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
@@ -309,7 +309,7 @@ jobs:
     - name: Compile package
       id: compile
       run: |
-        cd ${{ needs.compile-init.outputs.OPENWRTROOT }}
+        cd ${{ needs.CompileInitialize.outputs.OPENWRTROOT }}
         OPENWRTROOT=$(pwd)
         echo "OPENWRTROOT=$OPENWRTROOT" >> $GITHUB_ENV
         echo "OPENWRTROOT=$OPENWRTROOT" >> $GITHUB_OUTPUT
@@ -400,7 +400,7 @@ jobs:
     steps:
   
     - name: Remove Images
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled() && needs.compile-package.outputs.RELEASE_STATUS == 'success'
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled() && needs.CompileFirmware.outputs.RELEASE_STATUS == 'success'
       run: | 
         ID_LIST="$(docker images -q)"
         if [[ -n "${ID_LIST}" ]];then
@@ -410,14 +410,14 @@ jobs:
 
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
-      if: needs.compile-package.outputs.RELEASE_STATUS == 'success' && !cancelled() && env.UPLOAD_RELEASE == 'true'
+      if: needs.CompileFirmware.outputs.RELEASE_STATUS == 'success' && !cancelled() && env.UPLOAD_RELEASE == 'true'
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          name: ${{ needs.compile-package.outputs.RELEASE_DATE }} NanoPi-R2S-linux-5.4_固件下载
-          tag_name: ${{ needs.compile-package.outputs.RELEASE_TAG }}
+          name: ${{ needs.CompileFirmware.outputs.RELEASE_DATE }} NanoPi-R2S-linux-5.4_固件下载
+          tag_name: ${{ needs.CompileFirmware.outputs.RELEASE_TAG }}
           body_path: release.txt
-          files: ${{ needs.compile-package.outputs.FIRMWARE }}/*
+          files: ${{ needs.CompileFirmware.outputs.FIRMWARE }}/*
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@v2
