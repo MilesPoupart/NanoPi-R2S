@@ -72,9 +72,11 @@ jobs:
         echo "Compile machine=${{ inputs.use_machine }}"
 
     - name: Checkout
+      if: ${{ inputs.task_setting }} != "build-only"
       uses: actions/checkout@v3
 
     - name: Initialization Environment
+      if: ${{ inputs.task_setting }} != "build-only"
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
@@ -106,18 +108,21 @@ jobs:
         sudo timedatectl set-timezone "$TZ"
         
     - name: Login to Docker Hub
+      if: ${{ inputs.task_setting }} != "build-only"
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
         
     - name: Clone Source Code
+      if: ${{ inputs.task_setting }} != "build-only"
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         # cd openwrt
         
     # - name: Reset Version
+    #   if: ${{ inputs.task_setting }} != "build-only"
     #   id: reset
     #   run: |
     #     cd openwrt
@@ -128,6 +133,7 @@ jobs:
     #     rm -rf .git
 
     - name: Update Feeds
+      if: ${{ inputs.task_setting }} != "build-only"
       id: update
       run: |
         cd openwrt
@@ -140,17 +146,20 @@ jobs:
         ../scripts/hook-feeds.sh
 
     - name: MOD index file
+      if: ${{ inputs.task_setting }} != "build-only"
       run: |
          cd $OPENWRTROOT/package/lean/autocore/files/arm
          sed -i '/Load Average/i\\t\t<tr><td width="33%"><%:Github %></td><td><a href="https://github.com/MilesPoupart/NanoPi-R2S"><%:固件下载%></a></td></tr>' index.htm
 
     - name: Install Feeds
+      if: ${{ inputs.task_setting }} != "build-only"
       run: |
         cd $OPENWRTROOT
         cat feeds.conf.default
         ./scripts/feeds install -a
         
     - name: Load Custom Configuration
+      if: ${{ inputs.task_setting }} != "build-only"
       run: |
         [ -e files ] && mv files $OPENWRTROOT/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRTROOT/.config
@@ -162,6 +171,7 @@ jobs:
         make defconfig
         
     - name: Download Package
+      if: ${{ inputs.task_setting }} != "build-only"
       id: package
       run: |
         cd $OPENWRTROOT
@@ -172,10 +182,12 @@ jobs:
         ls -lah dl
   
     - name: Comporession
+      if: ${{ inputs.task_setting }} != "build-only"
       run: |
         tar --zstd -cf openwrt.tar.zst ./openwrt
 
     - name: Build and push
+      if: ${{ inputs.task_setting }} != "build-only"
       id: docker_build
       uses: docker/build-push-action@v3
       with:
@@ -185,12 +197,14 @@ jobs:
         tags: ${{ env.IMAGE }}
         
     - name: Image digest
+      if: ${{ inputs.task_setting }} != "build-only"
       run: echo ${{ steps.docker_build.outputs.digest }}
 
   CompileInitialize:
     if: ${{ inputs.task_setting }} == "build-only" || ${{ inputs.task_setting }} == "build-compose"
     runs-on: [self-hosted, Linux, X64, "${{ inputs.use_machine }}"]
     timeout-minutes: 1440
+    needs: [DownloadSourceCode]
 
     outputs:
       OPENWRTROOT: ${{ steps.clean.outputs.OPENWRTROOT }}
