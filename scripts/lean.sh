@@ -19,6 +19,8 @@ pushd package/community
 # Add Lienol's Packages
 git clone --depth=1 https://github.com/Lienol/openwrt-package
 rm -rf ../../customfeeds/luci/applications/luci-app-kodexplorer
+rm -rf ../../customfeeds/luci/applications/luci-app-socat
+rm -rf ../../customfeeds/luci/applications/luci-app-ipsec-server
 rm -rf openwrt-package/verysync
 rm -rf openwrt-package/luci-app-verysync
 
@@ -32,11 +34,6 @@ git checkout 4fd4bf8
 cd ../
 git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall2
 svn export https://github.com/xiaorouji/openwrt-passwall/branches/luci/luci-app-passwall
-
-# Add Lienol's Packages
-# git clone --depth=1 https://github.com/Lienol/openwrt-package
-# rm -rf openwrt-package/verysync
-# rm -rf openwrt-package/luci-app-verysync
 
 # Add luci-app-netdata
 rm -rf ../../customfeeds/luci/applications/luci-app-netdata
