@@ -24,6 +24,8 @@ rm -rf ../../customfeeds/luci/applications/luci-app-ipsec-server
 rm -rf openwrt-package/verysync
 rm -rf openwrt-package/luci-app-verysync
 
+rm -rf ../../customfeeds/packages/net/adguardhome
+
 # Add luci-app-irqbalance by QiuSimons https://github.com/QiuSimons/OpenWrt-Add
 svn export https://github.com/QiuSimons/OpenWrt-Add/trunk/luci-app-irqbalance
 
