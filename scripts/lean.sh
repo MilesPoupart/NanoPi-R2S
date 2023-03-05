@@ -97,7 +97,8 @@ rm -rf theme/luci-theme-design
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
 
 # Add luci-app-smartdns & smartdns
-svn export https://github.com/281677160/openwrt-package/trunk/luci-app-smartdns
+# svn export https://github.com/281677160/openwrt-package/trunk/luci-app-smartdns
+git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns
 
 # Add luci-app-wolplus
 svn export https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-wolplus
