@@ -92,6 +92,9 @@ git clone --depth=1 https://github.com/lisaac/luci-lib-docker
 git clone https://github.com/DHDAXCW/theme
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 rm -rf theme/luci-theme-design
+rm -rf ../../customfeeds/luci/themes/luci-theme-design
+git clone --depth=1 https://github.com/gngpp/luci-app-design-config
+git clone --depth=1 https://github.com/gngpp/luci-theme-design
 
 # Add subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
