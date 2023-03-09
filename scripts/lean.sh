@@ -93,6 +93,7 @@ git clone https://github.com/DHDAXCW/theme
 git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config
 rm -rf theme/luci-theme-design
 rm -rf ../../customfeeds/luci/themes/luci-theme-design
+rm -rf ../../customfeeds/luci/applications/luci-app-design-config
 git clone --depth=1 https://github.com/gngpp/luci-app-design-config
 git clone --depth=1 https://github.com/gngpp/luci-theme-design
 

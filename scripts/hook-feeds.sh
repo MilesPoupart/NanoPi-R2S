@@ -25,6 +25,11 @@ svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/mi
 # rm -rf packages/net/smartdns
 # svn co https://github.com/Lienol/openwrt-packages/trunk/net/smartdns packages/net/smartdns
 # svn co https://github.com/openwrt/packages/trunk/net/smartdns packages/net/smartdns
+
+# Replace watchcat with the official version
+rm -rf packages/utils/watchcat
+svn co https://github.com/openwrt/packages/trunk/utils/watchcat packages/utils/watchcat
+
 popd
 
 # Set to local feeds
