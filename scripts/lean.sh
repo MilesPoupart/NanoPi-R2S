@@ -126,7 +126,7 @@ svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff
 
 # Add OpenAppFilter
-git clone --depth=1 https://github.com/DHDAXCW/OpenAppFilter
+git clone --depth=1 https://github.com/destan19/OpenAppFilter
 
 # Add luci-aliyundrive-webdav
 rm -rf ../../customfeeds/luci/applications/luci-app-aliyundrive-webdav 
