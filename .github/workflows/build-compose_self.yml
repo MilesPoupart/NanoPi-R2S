@@ -306,6 +306,7 @@ jobs:
       RELEASE_DATE: ${{ steps.tag.outputs.RELEASE_DATE }}
       RELEASE_TAG: ${{ steps.tag.outputs.RELEASE_TAG }}
       RELEASE_STATUS: ${{ steps.tag.outputs.RELEASE_STATUS }}
+      KERNEL_VERSION: ${{ steps.generate.outputs.KERNEL_VERSION }}
 
     steps:
 
@@ -363,6 +364,8 @@ jobs:
         make package/install -j$(nproc) || make package/install -j1 V=s
         make target/install -j$(nproc) || make target/install -j1 V=s
         pushd bin/targets/rockchip/armv8
+        kernelv=`cat openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest | grep 'kernel - ' |  awk -F '[- ]' '{print $4}'`
+        echo "KERNEL_VERSION=$kernelv" >> $GITHUB_OUTPUT
         mv openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest ${{ inputs.compile_version }}-openwrt-rockchip-armv8-friendlyarm_nanopi-r2s.manifest
         # rm -rf openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-rootfs.tar.gz
         mv config.buildinfo ${{ inputs.compile_version }}-config.buildinfo
@@ -417,7 +420,7 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          name: ${{ needs.CompileFirmware.outputs.RELEASE_DATE }} NanoPi-R2S-linux-5.4_固件下载
+          name: ${{ needs.CompileFirmware.outputs.RELEASE_DATE }} NanoPi-R2S-linux-${{ needs.CompileFirmware.outputs.KERNEL_VERSION }} 固件
           tag_name: ${{ needs.CompileFirmware.outputs.RELEASE_TAG }}
           body_path: release.txt
           files: ${{ needs.CompileFirmware.outputs.FIRMWARE }}/*
