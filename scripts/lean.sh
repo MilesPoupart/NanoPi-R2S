@@ -116,17 +116,6 @@ svn export https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-wolplus
 # Add apk (Apk Packages Manager)
 svn export https://github.com/openwrt/packages/trunk/utils/apk
 
-# Add luci-udptools
-svn export https://github.com/zcy85611/Packages/trunk/luci-udptools
-svn export https://github.com/zcy85611/Packages/trunk/udp2raw
-svn export https://github.com/zcy85611/Packages/trunk/udpspeeder
-
-# Add extra wireless drivers
-svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8812au-ac
-svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8188eu
-svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl8192du
-svn export https://github.com/immortalwrt/immortalwrt/branches/openwrt-18.06-k5.4/package/kernel/rtl88x2bu
-
 # Add luci-app-poweroff
 git clone --depth=1 https://github.com/esirplayground/luci-app-poweroff
 
