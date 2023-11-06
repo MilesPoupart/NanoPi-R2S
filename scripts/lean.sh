@@ -54,7 +54,7 @@ git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 sed -i "s/\"control\"/\"system\"/g" luci-app-autotimeset/luasrc/controller/autotimeset.lua
 
 # Add luci-app-ssr-plus
-git clone --depth=1 https://github.com/fw876/helloworld
+git clone -b main --depth=1 https://github.com/fw876/helloworld
 
 # Add luci-app-unblockneteasemusic
 rm -rf ../../customfeeds/luci/applications/luci-app-unblockmusic
