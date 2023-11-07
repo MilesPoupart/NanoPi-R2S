@@ -23,7 +23,7 @@ svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/mi
 
 # Replace smartdns with the Lienol version
 rm -rf packages/net/smartdns
-svn co https://github.com/Lienol/openwrt-packages/trunk/net/smartdns packages/net/smartdns
+svn co https://github.com/Lienol/openwrt-packages/branches/master/net/smartdns packages/net/smartdns
 # svn co https://github.com/openwrt/packages/trunk/net/smartdns packages/net/smartdns
 
 # Replace watchcat with the official version
