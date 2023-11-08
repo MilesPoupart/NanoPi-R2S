@@ -12,6 +12,15 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
+      lede_source:
+        description: 'LEDE source'
+        required: true
+        default: DHDAXCW/lede-rockchip
+        type: choice
+        options:
+        - DHDAXCW/lede-rockchip
+        - MilesPoupart/lede-rockchip
+        - coolsnowwolf/lede
       use_machine:
         description: 'Machine'
         required: true
@@ -46,7 +55,7 @@ on:
   #   types: started
 
 env:
-  REPO_URL: https://github.com/DHDAXCW/lede-rockchip
+  REPO_URL: https://github.com/${{ inputs.lede_source }}
   REPO_BRANCH: stable
   CONFIG_FILE: configs/lean/lean_${{ inputs.compile_version }}.config
   DIY_SH: scripts/lean.sh
@@ -118,7 +127,7 @@ jobs:
       if: inputs.task_setting != 'build-only'
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        git clone $REPO_URL openwrt
         # cd openwrt
         
     # - name: Reset Version
