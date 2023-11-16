@@ -21,6 +21,16 @@ on:
         - DHDAXCW/lede-rockchip
         - MilesPoupart/lede-rockchip
         - coolsnowwolf/lede
+      kernel_version:
+          description: 'Linux kernel version'
+          required: true
+          default: '6.1'
+          type: choice
+          options:
+          - '6.1'
+          - '5.15'
+          - '5.10'
+          - '5.4'
       use_machine:
         description: 'Machine'
         required: true
@@ -64,6 +74,7 @@ env:
   TZ: Asia/Shanghai
   IMAGE: milespoupart/action-openwrt-cache:r2s_${{ inputs.compile_version }}
   COMMIT_ID: ${{ vars.COMMIT_ID }}
+  KERNEL_VER: ${{ inputs.kernel_version }}
 
 jobs:
 
@@ -175,6 +186,16 @@ jobs:
         chmod +x scripts/*.sh
         cd $OPENWRTROOT
         ../$DIY_SH
+        if [ "${{ inputs.compile_version }}" = "coolsnowwolf/lede" ]; then
+          if [ "$KERNEL_VER" != "5.15" ]; then
+              sed -i "s/5.15/$KERNEL_VER/g" target/linux/rockchip/Makefile
+          fi
+        else
+          if [ "$KERNEL_VER" != "6.1" ]; then
+            sed -i "s/6.1/$KERNEL_VER/g" target/linux/rockchip/Makefile
+          fi
+        fi
+        cat target/linux/rockchip/Makefile
         ../scripts/preset-clash-core.sh arm64
         ../scripts/preset-terminal-tools.sh
         make defconfig
