@@ -186,7 +186,7 @@ jobs:
         chmod +x scripts/*.sh
         cd $OPENWRTROOT
         ../$DIY_SH
-        if [ "${{ inputs.compile_version }}" = "coolsnowwolf/lede" ]; then
+        if [ "$REPO_URL" = "https://github.com/coolsnowwolf/lede" ]; then
           if [ "$KERNEL_VER" != "5.15" ]; then
               sed -i "s/5.15/$KERNEL_VER/g" target/linux/rockchip/Makefile
           fi
