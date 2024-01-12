@@ -46,12 +46,12 @@ git clone https://github.com/sbwml/luci-app-alist package/alist
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
 
-# Add luci-app-watchcat-plus
-git clone https://github.com/gngpp/luci-app-watchcat-plus.git package/luci-app-watchcat-plus
-
 # Clone community packages to package/community
 mkdir package/community
 pushd package/community
+
+# Add luci-app-watchcat-plus
+git clone https://github.com/gngpp/luci-app-watchcat-plus.git
 
 # Add Lienol's Packages
 git clone --depth=1 https://github.com/Lienol/openwrt-package
