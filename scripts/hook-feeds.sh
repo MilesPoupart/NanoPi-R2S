@@ -32,6 +32,7 @@ github_partial_clone immortalwrt luci use_default_branch protocols/luci-proto-mo
 
 # Add luci-app-gowebdav
 github_partial_clone immortalwrt luci use_default_branch applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
+rm -rf packages/net/gowebdav
 github_partial_clone immortalwrt packages use_default_branch net/gowebdav packages/net/gowebdav
 
 # Add tmate
