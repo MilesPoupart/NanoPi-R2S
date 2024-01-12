@@ -1,34 +1,58 @@
 #!/bin/bash
+now_dir=$(pwd)
+clone_dir=${now_dir}"/../git_clone_temporary_space"
+if [ ! -d "$clone_dir" ]; then
+  mkdir "$clone_dir"
+fi
+function github_partial_clone(){
+    url_prefix="https://github.com/" author_name="$1" repository_name="$2" branch_name="$3" required_dir="$4" saved_dir="$5"
+    if [${branch_name}="use_default_branch"]; then
+        branch_option="-b "${branch_name}
+    else
+        branch_option=""
+    fi
+    if [ ! -d ${saved_dir} ]; then
+        mkdir -vp ${saved_dir}
+    fi
+    if [ ! -d ${clone_dir}"/"${repository_name} ]; then
+        git clone --depth=1 ${branch_option} ${url_prefix}${author_name}"/"${repository_name}".git" ${clone_dir}"/"${repository_name}
+    fi
+    mv ${clone_dir}"/"${repository_name}"/"${required_dir}/* ${saved_dir}
+    rm -rf ${clone_dir}"/"${repository_name}
+}
+
 # Svn checkout packages from immortalwrt's repository
 pushd customfeeds
 
 # Add luci-app-eqos
-svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-eqos luci/applications/luci-app-eqos
+github_partial_clone immortalwrt luci use_default_branch applications/luci-app-eqos luci/applications/luci-app-eqos
 
 # Add luci-proto-modemmanager
-svn co https://github.com/immortalwrt/luci/trunk/protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
+github_partial_clone immortalwrt luci use_default_branch protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
 
 # Add luci-app-gowebdav
-svn co https://github.com/immortalwrt/luci/trunk/applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
-svn co https://github.com/immortalwrt/packages/trunk/net/gowebdav packages/net/gowebdav
+github_partial_clone immortalwrt luci use_default_branch applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
+github_partial_clone immortalwrt packages use_default_branch net/gowebdav packages/net/gowebdav
 
 # Add tmate
 git clone --depth=1 https://github.com/immortalwrt/openwrt-tmate
 
 # Add gotop
-svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/admin/gotop packages/admin/gotop
+rm -rf packages/admin/gotop
+github_partial_clone immortalwrt packages openwrt-18.06 admin/gotop packages/admin/gotop
 
 # Add minieap
-svn co https://github.com/immortalwrt/packages/trunk/net/minieap packages/net/minieap
+rm -rf packages/net/minieap
+github_partial_clone immortalwrt packages use_default_branch net/minieap packages/net/minieap
 
 # Replace smartdns with the Lienol version
 rm -rf packages/net/smartdns
-svn co https://github.com/Lienol/openwrt-packages/branches/master/net/smartdns packages/net/smartdns
-# svn co https://github.com/openwrt/packages/trunk/net/smartdns packages/net/smartdns
+github_partial_clone Lienol openwrt-packages master net/smartdns packages/net/smartdns
+# github_partial_clone openwrt packages use_default_branch net/smartdns packages/net/smartdns
 
 # Replace watchcat with the official version
 rm -rf packages/utils/watchcat
-svn co https://github.com/openwrt/packages/trunk/utils/watchcat packages/utils/watchcat
+github_partial_clone openwrt packages use_default_branch utils/watchcat packages/utils/watchcat
 
 popd
 
