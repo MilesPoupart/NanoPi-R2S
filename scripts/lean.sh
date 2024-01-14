@@ -149,6 +149,7 @@ git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns
 github_partial_clone sundaqiang openwrt-packages use_default_branch luci-app-wolplus luci-app-wolplus
 
 # Add apk (Apk Packages Manager)
+rm -rf rm -rf ../../customfeeds/packages/utils/apk
 github_partial_clone openwrt packages use_default_branch utils/apk apk
 
 # Add luci-app-poweroff
