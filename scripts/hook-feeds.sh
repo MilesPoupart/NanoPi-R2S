@@ -6,10 +6,10 @@ if [ ! -d "$clone_dir" ]; then
 fi
 function github_partial_clone(){
     url_prefix="https://github.com/" author_name="$1" repository_name="$2" branch_name="$3" required_dir="$4" saved_dir="$5"
-    if [${branch_name}="use_default_branch"]; then
-        branch_option="-b "${branch_name}
-    else
+    if [ "$branch_name" == "use_default_branch" ]; then
         branch_option=""
+    else        
+        branch_option="-b "${branch_name}
     fi
     if [ ! -d ${saved_dir} ]; then
         mkdir -vp ${saved_dir}
@@ -25,9 +25,11 @@ function github_partial_clone(){
 pushd customfeeds
 
 # Add luci-app-eqos
+rm -rf luci/applications/luci-app-eqos
 github_partial_clone immortalwrt luci use_default_branch applications/luci-app-eqos luci/applications/luci-app-eqos
 
 # Add luci-proto-modemmanager
+rm -rf luci/protocols/luci-proto-modemmanager
 github_partial_clone immortalwrt luci use_default_branch protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
 
 # Add luci-app-gowebdav
