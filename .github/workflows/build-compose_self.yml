@@ -15,7 +15,7 @@ on:
       lede_source:
         description: 'LEDE source'
         required: true
-        default: DHDAXCW/lede-rockchip
+        default: coolsnowwolf/lede
         type: choice
         options:
         - DHDAXCW/lede-rockchip
@@ -34,15 +34,15 @@ on:
       use_machine:
         description: 'Machine'
         required: true
-        default: 10700
+        default: '10700'
         type: choice
         options:
         - 7700HQ
-        - 10700
+        - '10700'
       compile_version:
         description: 'Version'
         required: true
-        default: full_lite
+        default: docker_lite
         type: choice
         options:
         - docker_lite
