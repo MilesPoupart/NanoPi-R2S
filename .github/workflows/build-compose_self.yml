@@ -21,6 +21,7 @@ on:
         - DHDAXCW/lede-rockchip
         - MilesPoupart/lede-rockchip
         - coolsnowwolf/lede
+        - MilesPoupart/lede
       kernel_version:
           description: 'Linux kernel version'
           required: true
