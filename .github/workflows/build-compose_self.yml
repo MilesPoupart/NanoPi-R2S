@@ -191,6 +191,7 @@ jobs:
           if [ "$KERNEL_VER" != "5.15" ]; then
               sed -i "s/5.15/$KERNEL_VER/g" target/linux/rockchip/Makefile
           fi
+          cat $GITHUB_WORKSPACE/xdp-sockets-diag_support.mk >> package/kernel/linux/modules/netsupport.mk
         else
           if [ "$KERNEL_VER" != "6.1" ]; then
             sed -i "s/6.1/$KERNEL_VER/g" target/linux/rockchip/Makefile
