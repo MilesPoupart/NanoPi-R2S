@@ -116,7 +116,8 @@ git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
 git clone --depth=1 https://github.com/NateLol/luci-app-oled
 
 # Add ServerChan
-git clone --depth=1 https://github.com/tty228/luci-app-serverchan
+rm -rf ../../customfeeds/luci/applications/luci-app-serverchan
+git clone -b openwrt-18.06 --depth=1 https://github.com/tty228/luci-app-wechatpush.git
 
 # Add luci-app-dockerman
 rm -rf ../../customfeeds/luci/collections/luci-lib-docker
