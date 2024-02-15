@@ -49,8 +49,8 @@ rm -rf packages/net/minieap
 github_partial_clone immortalwrt packages use_default_branch net/minieap packages/net/minieap
 
 # Replace smartdns
-rm -rf packages/net/smartdns
-github_partial_clone immortalwrt packages use_default_branch net/smartdns packages/net/smartdns
+# rm -rf packages/net/smartdns
+# github_partial_clone immortalwrt packages use_default_branch net/smartdns packages/net/smartdns
 
 # Replace watchcat with the official version
 rm -rf packages/utils/watchcat
