@@ -48,10 +48,9 @@ github_partial_clone immortalwrt packages openwrt-18.06 admin/gotop packages/adm
 rm -rf packages/net/minieap
 github_partial_clone immortalwrt packages use_default_branch net/minieap packages/net/minieap
 
-# Replace smartdns with the Lienol version
+# Replace smartdns
 rm -rf packages/net/smartdns
-github_partial_clone Lienol openwrt-packages master net/smartdns packages/net/smartdns
-# github_partial_clone openwrt packages use_default_branch net/smartdns packages/net/smartdns
+github_partial_clone immortalwrt packages use_default_branch net/smartdns packages/net/smartdns
 
 # Replace watchcat with the official version
 rm -rf packages/utils/watchcat
