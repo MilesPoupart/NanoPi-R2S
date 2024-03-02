@@ -44,7 +44,7 @@ wget -P package/base-files/files/lib/preinit https://raw.githubusercontent.com/D
 # alist
 git clone https://github.com/sbwml/luci-app-alist package/alist
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 21.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 # Clone community packages to package/community
 mkdir package/community
@@ -84,6 +84,11 @@ git clone --depth=1 https://github.com/sirpdboy/NetSpeedTest
 # Add luci-app-autotimeset
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 sed -i "s/\"control\"/\"system\"/g" luci-app-autotimeset/luasrc/controller/autotimeset.lua
+
+# Add mosdns
+rm -rf ../../customfeeds/packages/net/mosdns
+rm -rf ../../customfeeds/applications/luci-app-mosdns
+git clone --depth=1 https://github.com/sbwml/luci-app-mosdns
 
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
