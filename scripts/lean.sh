@@ -92,7 +92,7 @@ sed -i "s/\"control\"/\"system\"/g" luci-app-autotimeset/luasrc/controller/autot
 # Add mosdns
 rm -rf ../../customfeeds/packages/net/mosdns
 rm -rf ../../customfeeds/packages/utils/v2dat
-rm -rf ../../customfeeds/applications/luci-app-mosdns
+rm -rf ../../customfeeds/luci/applications/luci-app-mosdns
 git clone --depth=1 https://github.com/sbwml/luci-app-mosdns
 
 # Add luci-app-ssr-plus
