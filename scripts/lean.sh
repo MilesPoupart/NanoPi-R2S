@@ -28,6 +28,10 @@ function github_partial_clone(){
     rm -rf ${clone_dir}"/"${repository_name}
 }
 
+# remove 1608Mhz for kernel 6.1
+rm -rf target/linux/rockchip/patches-6.1/991-arm64-dts-rockchip-add-more-cpu-operating-points-for.patch
+cp -f $GITHUB_WORKSPACE/patches/991-arm64-dts-rockchip-add-more-cpu-operating-points-for.patch target/linux/rockchip/patches-6.1/991-arm64-dts-rockchip-add-more-cpu-operating-points-for.patch
+
 rm -rf package/base-files/files/lib/preinit/80_mount_root
 wget -P package/base-files/files/lib/preinit https://raw.githubusercontent.com/DHDAXCW/lede-rockchip/stable/package/base-files/files/lib/preinit/80_mount_root 
 # rm -rf package/libs/libnl-tiny
