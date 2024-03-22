@@ -33,9 +33,13 @@ rm -rf luci/protocols/luci-proto-modemmanager
 github_partial_clone immortalwrt luci use_default_branch protocols/luci-proto-modemmanager luci/protocols/luci-proto-modemmanager
 
 # Add luci-app-gowebdav
-github_partial_clone immortalwrt luci use_default_branch applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
-rm -rf packages/net/gowebdav
-github_partial_clone immortalwrt packages use_default_branch net/gowebdav packages/net/gowebdav
+# github_partial_clone immortalwrt luci use_default_branch applications/luci-app-gowebdav luci/applications/luci-app-gowebdav
+# rm -rf packages/net/gowebdav
+# github_partial_clone immortalwrt packages use_default_branch net/gowebdav packages/net/gowebdav
+
+# Add dufs
+github_partial_clone immortalwrt luci use_default_branch applications/luci-app-dufs luci/applications/luci-app-dufs
+github_partial_clone immortalwrt packages use_default_branch net/dufs packages/net/dufs
 
 # Add tmate
 git clone --depth=1 https://github.com/immortalwrt/openwrt-tmate
