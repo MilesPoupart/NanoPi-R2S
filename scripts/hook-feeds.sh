@@ -60,6 +60,10 @@ github_partial_clone immortalwrt packages use_default_branch net/minieap package
 rm -rf packages/utils/watchcat
 github_partial_clone openwrt packages use_default_branch utils/watchcat packages/utils/watchcat
 
+# Replace adguardhome
+rm -rf packages/net/adguardhome
+github_partial_clone immortalwrt packages use_default_branch net/adguardhome packages/net/adguardhome
+
 popd
 
 # Set to local feeds
