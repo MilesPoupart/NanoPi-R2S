@@ -187,14 +187,8 @@ jobs:
         chmod +x scripts/*.sh
         cd $OPENWRTROOT
         ../$DIY_SH
-        if [[ "$REPO_URL" = "https://github.com/coolsnowwolf/lede" || "$REPO_URL" = "https://github.com/MilesPoupart/lede" ]]; then
-          if [ "$KERNEL_VER" != "5.15" ]; then
-              sed -i "s/5.15/$KERNEL_VER/g" target/linux/rockchip/Makefile
-          fi
-        else
-          if [ "$KERNEL_VER" != "6.1" ]; then
-            sed -i "s/6.1/$KERNEL_VER/g" target/linux/rockchip/Makefile
-          fi
+        if [ "$KERNEL_VER" != "6.1" ]; then
+          sed -i "s/6.1/$KERNEL_VER/g" target/linux/rockchip/Makefile
         fi
         cat target/linux/rockchip/Makefile
         ../scripts/preset-clash-core.sh arm64
