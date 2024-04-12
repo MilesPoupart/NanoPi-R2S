@@ -116,7 +116,9 @@ github_partial_clone vernesong OpenClash use_default_branch luci-app-openclash l
 
 # Add ddnsto & linkease
 github_partial_clone linkease nas-packages-luci use_default_branch luci/luci-app-ddnsto luci-app-ddnsto
+github_partial_clone linkease nas-packages-luci use_default_branch luci/luci-app-linkease luci-app-linkease
 github_partial_clone linkease nas-packages use_default_branch network/services/ddnsto ddnsto
+github_partial_clone linkease nas-packages use_default_branch network/services/linkease linkease
 
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
