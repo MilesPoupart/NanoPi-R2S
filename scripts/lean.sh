@@ -45,8 +45,7 @@ wget -P package/base-files/files/lib/preinit https://raw.githubusercontent.com/D
 # github_partial_clone DHDAXCW lede-rockchip use_default_branch package/kernel/mt76 package/kernel/mt76
 # github_partial_clone openwrt openwrt use_default_branch package/network/services/hostapd package/network/services/hostapd
 
-# alist
-git clone https://github.com/sbwml/luci-app-alist package/alist
+# golang
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
@@ -101,9 +100,6 @@ git clone --depth=1 https://github.com/sbwml/luci-app-mosdns
 # Add luci-app-ssr-plus
 git clone --depth=1 https://github.com/fw876/helloworld
 
-# add luci-app-daed
-git clone https://github.com/sbwml/luci-app-daed-next
-
 # Add luci-app-unblockneteasemusic
 rm -rf ../../customfeeds/luci/applications/luci-app-unblockmusic
 git clone --branch master https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git
@@ -154,6 +150,15 @@ git clone --depth=1 https://github.com/gngpp/luci-theme-design
 
 # Add subconverter
 git clone --depth=1 https://github.com/tindy2013/openwrt-subconverter
+
+# Add luci-app-lucky
+git clone --depth=1 https://github.com/gdy666/luci-app-lucky
+
+# alist
+git clone https://github.com/sbwml/luci-app-alist --depth=1
+
+# luci-app-daed-next
+git clone --depth=1 https://github.com/QiuSimons/luci-app-daed-next
 
 # Add luci-app-smartdns & smartdns
 rm -rf ../../customfeeds/luci/applications/luci-app-smartdns
