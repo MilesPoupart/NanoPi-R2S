@@ -119,6 +119,7 @@ github_partial_clone linkease nas-packages-luci use_default_branch luci/luci-app
 github_partial_clone linkease nas-packages-luci use_default_branch luci/luci-app-linkease luci-app-linkease
 github_partial_clone linkease nas-packages use_default_branch network/services/ddnsto ddnsto
 github_partial_clone linkease nas-packages use_default_branch network/services/linkease linkease
+github_partial_clone linkease nas-packages use_default_branch multimedia/ffmpeg-remux ffmpeg-remux
 
 # Add luci-app-onliner (need luci-app-nlbwmon)
 git clone --depth=1 https://github.com/rufengsuixing/luci-app-onliner
