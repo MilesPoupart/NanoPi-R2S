@@ -49,7 +49,7 @@ wget -P package/base-files/files/lib/preinit https://raw.githubusercontent.com/D
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
-# Clone community packages to package/community
+# Clone community packages
 mkdir package/community
 pushd package/community
 
@@ -208,8 +208,6 @@ popd
 
 # Change default shell to zsh
 sed -i 's/\/bin\/ash/\/usr\/bin\/zsh/g' package/base-files/files/etc/passwd
-
-# sed -i 's/5.15/5.10/g' target/linux/rockchip/Makefile
 
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
