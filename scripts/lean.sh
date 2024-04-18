@@ -86,11 +86,6 @@ git clone --depth=1 https://github.com/sirpdboy/NetSpeedTest
 git clone --depth=1 https://github.com/sirpdboy/luci-app-autotimeset
 sed -i "s/\"control\"/\"system\"/g" luci-app-autotimeset/luasrc/controller/autotimeset.lua
 
-# Add dockerman
-rm -rf ../../customfeeds/luci/applications/luci-app-dockerman
-git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
-github_partial_clone lisaac luci-app-dockerman use_default_branch applications/luci-app-dockerman luci-app-dockerman
-
 # Add mosdns
 rm -rf ../../customfeeds/packages/net/mosdns
 rm -rf ../../customfeeds/packages/utils/v2dat
@@ -135,8 +130,8 @@ git clone -b openwrt-18.06 --depth=1 https://github.com/tty228/luci-app-wechatpu
 rm -rf ../../customfeeds/luci/collections/luci-lib-docker
 rm -rf ../../customfeeds/luci/applications/luci-app-docker
 rm -rf ../../customfeeds/luci/applications/luci-app-dockerman
-git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
-git clone --depth=1 https://github.com/lisaac/luci-lib-docker
+github_partial_clone lisaac luci-app-dockerman use_default_branch applications/luci-app-dockerman luci-app-dockerman
+github_partial_clone lisaac luci-lib-docker use_default_branch collections/luci-lib-docker luci-lib-docker
 
 # Add luci-theme
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
