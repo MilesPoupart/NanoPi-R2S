@@ -160,9 +160,6 @@ git clone --depth=1 https://github.com/gdy666/luci-app-lucky
 # alist
 git clone https://github.com/sbwml/luci-app-alist --depth=1
 
-# luci-app-daed-next
-git clone --depth=1 https://github.com/QiuSimons/luci-app-daed-next
-
 # Add luci-app-smartdns & smartdns
 rm -rf ../../customfeeds/luci/applications/luci-app-smartdns
 git clone --depth=1 -b lede https://github.com/pymumu/luci-app-smartdns
