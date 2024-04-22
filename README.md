@@ -1,3 +1,6 @@
+# 本项目已迁移至新项目继续更新
+请移步：https://github.com/MilesPoupart/OpenWrt_RockChip
+
 ## 基于DHDAXCW骷髅头的R2S固件进行修改
 
 <img src="https://img.shields.io/github/downloads/MilesPoupart/NanoPi-R2S/total.svg?style=for-the-badge&color=32C955"/>
